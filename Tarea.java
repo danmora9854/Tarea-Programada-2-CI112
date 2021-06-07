@@ -1,4 +1,3 @@
 public class Tarea{
-jjj
 
 }
