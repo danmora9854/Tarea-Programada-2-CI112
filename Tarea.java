@@ -14,7 +14,7 @@ public class Tarea
     ArrayList <Nota> notas;
     int id;
     String estado;
-    public Tarea ()
+    public Tarea (int id)
     {
         colaborador ="" ;
         estado="Pendiente"
@@ -33,7 +33,7 @@ public class Tarea
         {
             infoAdmin.cantidades.add("");
         }
-        id = 0;
+        this.id = id;
     }
     
     public void agregueInfo ()
