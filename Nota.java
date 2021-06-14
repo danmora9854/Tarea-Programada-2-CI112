@@ -37,4 +37,9 @@ public class Nota
             hayElementos = (ans.equals("Sí"))?true:false;
         }
     }
+    public String muestreElementos(){
+        String display="Los recursos de esta tarea son: \n";
+        for(int i=0;i<recurso.size;i++){display=recurso.get(i)+" con "+cantidades.get(i)+" cantidades.\n"}
+        return display;
+    }
 }
