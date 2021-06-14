@@ -51,16 +51,19 @@ public class Tarea
         
         //Por último pregunta si quiere agregar alguna nota. Las notas son listas simples de elementos. Como en el ejemplo que sale en el word
         //que mencionan una lista de recursos de la tarea.
-        boolean hayNotas = true;
+        String [] ops1 = {"Sí","No"};
+        String ans1 = (String)(JOptionPane.showInputDialog(null,"Desea ingresar alguna lista extra de elementos util para el manejo de la tarea?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
+        boolean hayNotas = (ans1.equals("Sí"))?true:false;
         while (hayNotas)
         {
             //pregunta con JOptionPane por el titulo de la nota.
-            String titulo = (String) ;
+            String titulo = (String)(JOptionPane.showInputDialog(null,"Ingrese título de la lista"));
             Nota newNote = new Nota (titulo);
             newNote.guardeElementos();
             notas.add(newNote);
             
-            //pregunta si quiere ingresar alguna otra nota. Si no, hace hayNotas = false
+            ans = (String)(JOptionPane.showInputDialog(null,"Desea ingresar otra lista extra de elementos util para el manejo de la tarea?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
+            hayNotas = (ans1.equals("Sí"))?true:false;
         }
     }
 }
