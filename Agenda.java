@@ -106,7 +106,12 @@ public class Agenda
         
         //Luego pone un menu del JOptionPane que le muestre al usuario esas opciones de arriba y escoja cual lista modificar.
         //Digamos que el ID de la lista a modificar es id.
-        int id = -1;
-        coleccion.get(id).consulte();
+        String ans = (String)(JOptionPane.showInputDialog(null,"Seleccione la lista de tareas a eliminar?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
+        int index = -1;
+        for (int j = 0; j<coleccion.size(); j++)
+        {
+            if(ops[j].equals(ans)) {index = j;}
+        }
+        coleccion.get(index).consulte();
     }
 }
