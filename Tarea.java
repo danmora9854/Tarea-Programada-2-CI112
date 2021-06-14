@@ -13,11 +13,11 @@ public class Tarea
     String colabolador;
     ArrayList <Nota> notas;
     int id;
-    
+    String estado;
     public Tarea ()
     {
         colaborador ="" ;
-   
+        estado="Pendiente"
         notas = new ArrayList <Nota> ();
         notas.add(new Nota ("Información Administrativa"));
         Nota infoAdmin = notas.get(0);
