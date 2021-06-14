@@ -13,14 +13,13 @@ public class Lista
     public String nombre;
     public int id;
     public String descripcion;
-    public String estado;
     public ArrayList <Tarea> coleccion;//Acá va guardando las distintas tareas
     public ArrayList <Integer> registro;//Acá va guardando el ID de cada tarea
     
     public Lista (int id)
     {
         this.id = id;
-        estado = "pendiente";
+
         //Deberia implementarse que el JOptionPane le pregunta ahi al usuario por el nombre y descripcion
         nombre = "";
         descripcion = "";
