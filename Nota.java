@@ -13,13 +13,13 @@ public class Nota
 {
     String titulo;
     ArrayList <String> recurso;
-    ArrayList <Integer> cantidades;
+    ArrayList <String> cantidades;
     
     public Nota (String titulo)
     {
         this.titulo = titulo;
         recurso = new ArrayList <String> ();
-        cantidades = new ArrayList <Integer> ();
+        cantidades = new ArrayList <String> ();
     }
     
     public void guardeElementos ()
@@ -39,12 +39,12 @@ public class Nota
     }
     public String muestreElementos(){
         String display="Los recursos de esta tarea son: \n";
-        for(int i=0;i<recurso.size;i++){display+=recurso.get(i)+" con "+cantidades.get(i)+" cantidades.\n"}
+        for(int i=0;i<recurso.size();i++){display+=recurso.get(i)+" con "+cantidades.get(i)+" cantidades.\n";}
         return display;
     }
     public void cambieElementos(int i){
         boolean cambioElementos = true;
-        while (hayElementos)
+        while (cambioElementos)
         {
             String elemento = (String)(JOptionPane.showInputDialog(null,"Ingrese tipo de elemento."));
             String cantidad = (String)(JOptionPane.showInputDialog(null,"Ingrese cantidad de elemento."));
