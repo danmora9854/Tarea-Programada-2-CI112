@@ -40,11 +40,18 @@ public class Agenda
         String [] ops = new String [coleccion.size()];
         for (int i = 0; i<coleccion.size(); i++)
         {
-            ops[i] = coleccion.get(i).deNombre() + " (ID: " + (i+1) + ")";
+            ops[i] = coleccion.get(i).nombre + " (ID: " + (i+1) + ")";
         }
         
         //Luego pone un menu del JOptionPane que le muestre al usuario esas opciones de arriba y escoja cual lista eliminar.
         //Despues elimina la lista escogida de la coleccion y del registro
+        String ans = (String)(JOptionPane.showInputDialog(null,"Seleccione la lista de tareas a eliminar?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
+        int index = -1;
+        for (int j = 0; j<coleccion.size(); j++)
+        {
+            if(ops[j].equals(ans)) {index = j;}
+        }
+        coleccion.remove(index);
     }
     
     /**
@@ -55,14 +62,19 @@ public class Agenda
         String [] ops = new String [coleccion.size()];
         for (int i = 0; i<coleccion.size(); i++)
         {
-            ops[i] = coleccion.get(i).deNombre() + " (ID: " + (i+1) + ")";
+            ops[i] = coleccion.get(i).nombre + " (ID: " + (i+1) + ")";
         }
         
         //Luego pone un menu del JOptionPane que le muestre al usuario esas opciones de arriba y escoja cual lista modificar.
         //Digamos que el ID de la lista a modificar es id.
         //Invoca un metodo de la clase Lista que le permite al usuario modificar cualquier informacion de esa lista de tareas.
-        int id = -1;
-        coleccion.get(id).modifiqueInfo();
+        String ans = (String)(JOptionPane.showInputDialog(null,"Seleccione la lista de tareas a eliminar?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
+        int index = -1;
+        for (int j = 0; j<coleccion.size(); j++)
+        {
+            if(ops[j].equals(ans)) {index = j;}
+        }
+        coleccion.get(index).modifiqueInfo();
     }
     
     /**
@@ -72,7 +84,13 @@ public class Agenda
      */
     public void consultarColeccion ()
     {
-        
+        String msg = "";
+        for (int i = 0; i<coleccion.size(); i++)
+        {
+            msg += coleccion.get(i).nombre + " (ID: " + (i+1) + ")\n";
+            msg += coleccion.get(i).descripcion + "\n\n";
+        }
+        JOptionPane.showMessageDialog(null,msg);
     }
     
     /**
@@ -83,7 +101,7 @@ public class Agenda
         String [] ops = new String [coleccion.size()];
         for (int i = 0; i<coleccion.size(); i++)
         {
-            ops[i] = coleccion.get(i).deNombre() + " (ID: " + (i+1) + ")";
+            ops[i] = coleccion.get(i).nombre + " (ID: " + (i+1) + ")";
         }
         
         //Luego pone un menu del JOptionPane que le muestre al usuario esas opciones de arriba y escoja cual lista modificar.
