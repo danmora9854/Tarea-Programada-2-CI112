@@ -39,7 +39,7 @@ public class Nota
     }
     public String muestreElementos(){
         String display="Los recursos de esta tarea son: \n";
-        for(int i=0;i<recurso.size;i++){display=recurso.get(i)+" con "+cantidades.get(i)+" cantidades.\n"}
+        for(int i=0;i<recurso.size;i++){display+=recurso.get(i)+" con "+cantidades.get(i)+" cantidades.\n"}
         return display;
     }
     public void cambieElementos(int i){
