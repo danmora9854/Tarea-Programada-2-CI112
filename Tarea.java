@@ -68,8 +68,8 @@ public class Tarea
         }
     }
     public String muestreNotas(){
-        String[] nombresnotas=new String[notas.size];
-        for(int j=0;j<notas.size;j++){
+        String[] nombresnotas=new String[notas.size()];
+        for(int j=0;j<notas.size();j++){
             nombresnotas[j]=notas.get(j).titulo;
         }
         String ans = (String)(JOptionPane.showInputDialog(null,"¿Cuál nota desea ver?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, nombresnotas, nombresnotas[0]));
