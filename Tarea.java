@@ -52,7 +52,7 @@ public class Tarea
         //Por último pregunta si quiere agregar alguna nota. Las notas son listas simples de elementos. Como en el ejemplo que sale en el word
         //que mencionan una lista de recursos de la tarea.
         String [] ops1 = {"Sí","No"};
-        String ans1 = (String)(JOptionPane.showInputDialog(null,"Desea ingresar alguna lista extra de elementos util para el manejo de la tarea?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
+        String ans1 = (String)(JOptionPane.showInputDialog(null,"¿Desea ingresar alguna lista extra de elementos util para el manejo de la tarea?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
         boolean hayNotas = (ans1.equals("Sí"))?true:false;
         while (hayNotas)
         {
@@ -62,8 +62,21 @@ public class Tarea
             newNote.guardeElementos();
             notas.add(newNote);
             
-            ans = (String)(JOptionPane.showInputDialog(null,"Desea ingresar otra lista extra de elementos util para el manejo de la tarea?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
+            ans = (String)(JOptionPane.showInputDialog(null,"¿Desea ingresar otra lista extra de elementos util para el manejo de la tarea?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
             hayNotas = (ans1.equals("Sí"))?true:false;
         }
+    }
+    public String muestreNotas(){
+        String[] nombresnotas=new String[notas.size];
+        for(int j=0;j<notas.size;j++){
+            nombresnotas[j]=notas.get(j).titulo;
+        }
+        String ans = (String)(JOptionPane.showInputDialog(null,"¿Cuál nota desea ver?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, nombresnotas, nombresnotas[0]));
+        int index=-1;
+        for (int i = 0; i<nombresnotas.length; i++)
+        {
+            if (nombresnotas[i].equals(ans)) {index = i;}
+        }
+        return notas.get(index).muestreElementos();
     }
 }
