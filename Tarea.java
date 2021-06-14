@@ -17,7 +17,7 @@ public class Tarea
     public Tarea (int id)
     {
         colaborador ="" ;
-        estado="Pendiente"
+        estado="Pendiente";
         notas = new ArrayList <Nota> ();
         notas.add(new Nota ("Información Administrativa"));
         Nota infoAdmin = notas.get(0);
