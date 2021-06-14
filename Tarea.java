@@ -68,7 +68,9 @@ public class Tarea
             hayNotas = (ans1.equals("Sí"))?true:false;
         }
     }
-    public String muestreNotas(){
+    
+    public String muestreNota()
+    {
         String[] nombresnotas=new String[notas.size()];
         for(int j=0;j<notas.size();j++){
             nombresnotas[j]=notas.get(j).titulo;
@@ -81,5 +83,36 @@ public class Tarea
         }
         return notas.get(index).muestreElementos();
     }
+    
+    public void modifiqueAtributos()
+    {
+        String [] ops = {"Título","ID"};
+        String ans = (String)(JOptionPane.showInputDialog(null,"Seleccione el atributo a modificar","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
+        String newVal = JOptionPane.showInputDialog(null,"Ingrese el nuevo valor del atributo. Recuerde que si cambia el ID este debe ser un número entero.");
+        switch(ans)
+        {
+            case "Título":
+                titulo = newVal;
+                break;
+            case "ID":
+                id = Integer.parseInt(newVal);
+                break;
+        }        
+    }
+    
     //Metodo de cambio de notas
+    public void modifiqueNota()
+    {
+        String[] nombresnotas=new String[notas.size()];
+        for(int j=0;j<notas.size();j++){
+            nombresnotas[j]=notas.get(j).titulo;
+        }
+        String ans = (String)(JOptionPane.showInputDialog(null,"¿Cuál nota desea modificar?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, nombresnotas, nombresnotas[0]));
+        int index=-1;
+        for (int i = 0; i<nombresnotas.length; i++)
+        {
+            if (nombresnotas[i].equals(ans)) {index = i;}
+        }
+        notas.get(index).cambieElementos();
+    }
 }
