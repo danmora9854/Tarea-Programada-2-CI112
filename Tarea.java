@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 public class Tarea
 {
-    String colabolador;
     ArrayList <Nota> notas;
     int id;
     String estado;
+    String titulo;
     public Tarea (int id)
     {
-        colaborador ="" ;
-        estado="Pendiente";
+        estado = "Pendiente";
+        titulo = "";
         notas = new ArrayList <Nota> ();
         notas.add(new Nota ("Información Administrativa"));
         Nota infoAdmin = notas.get(0);
@@ -38,6 +38,7 @@ public class Tarea
     
     public void agregueInfo ()
     {
+        titulo = JOptionPane.showInputDialog(null,"Ingrese título de la tarea");
         //Un menu donde elige qué de infoAdmin llenar
         String [] ops = {"Grado de avance","Colaborador","Tiempo Asignado","Prioridad","Complejidad","Fecha de inicio","Fecha de fin","Estimación"};
         String ans = (String)(JOptionPane.showInputDialog(null,"Cuál entrada desea rellenar?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
