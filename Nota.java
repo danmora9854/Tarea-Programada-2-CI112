@@ -42,4 +42,18 @@ public class Nota
         for(int i=0;i<recurso.size;i++){display=recurso.get(i)+" con "+cantidades.get(i)+" cantidades.\n"}
         return display;
     }
+    public void cambieElementos(int i){
+        boolean cambioElementos = true;
+        while (hayElementos)
+        {
+            String elemento = (String)(JOptionPane.showInputDialog(null,"Ingrese tipo de elemento."));
+            String cantidad = (String)(JOptionPane.showInputDialog(null,"Ingrese cantidad de elemento."));
+            recurso.set(i,elemento);
+            cantidades.set(i,cantidad);
+            
+            String [] ops = {"Sí","No"};
+            String ans = (String)(JOptionPane.showInputDialog(null,"Desea cambiar otro elemento?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
+            cambioElementos = (ans.equals("Sí"))?true:false;
+        }
+    }
 }
