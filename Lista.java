@@ -129,4 +129,15 @@ public class Lista
         }
         return coleccion.get(index).muestreNota();
     }
+    
+    /**
+     * Método que guarda en archivos todas las tareas de una lista.
+     */
+    public void guardeLista()
+    {
+        for (int i = 0; i<coleccion.size(); i++)
+        {
+            coleccion.get(i).guardeTarea(nombre,id,descripcion);
+        }
+    }
 }
