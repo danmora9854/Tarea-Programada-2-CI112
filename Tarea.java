@@ -10,15 +10,14 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 public class Tarea
 {
-    public ArrayList <String> colaboradores;
-    public String [] atributos;//Aquí va estado de la tarea, complejidad y prioridad
-    public ArrayList <Nota> notas;
-    public int id;
+    String colabolador;
+    ArrayList <Nota> notas;
+    int id;
     
     public Tarea ()
     {
-        colaboradores = new ArrayList <String> ();
-        atributos = new String [3];
+        colaborador ="" ;
+   
         notas = new ArrayList <Nota> ();
         notas.add(new Nota ("Información Administrativa"));
         Nota infoAdmin = notas.get(0);
@@ -47,7 +46,7 @@ public class Tarea
         {
             if (ops[i].equals(ans)) {index = i;}
         }
-        String data = (String)(JOptionPane.showInputDialog(null,"Ingrese data de la entrada"));
+        String data = (String)(JOptionPane.showInputDialog(null,"Ingrese los datos de la entrada"));
         notas.get(0).cantidades.set(index,data);
         
         //Por último pregunta si quiere agregar alguna nota. Las notas son listas simples de elementos. Como en el ejemplo que sale en el word
