@@ -84,6 +84,9 @@ public class Tarea
         return notas.get(index).muestreElementos();
     }
     
+    /**
+     * Método que modifica atributos básicos de la tarea
+     */
     public void modifiqueAtributos()
     {
         String [] ops = {"Título","ID"};
@@ -100,7 +103,9 @@ public class Tarea
         }        
     }
     
-    //Metodo de cambio de notas
+    /**
+     * Método de cambio de notas
+     */
     public void modifiqueNota()
     {
         String[] nombresnotas=new String[notas.size()];
@@ -114,5 +119,11 @@ public class Tarea
             if (nombresnotas[i].equals(ans)) {index = i;}
         }
         notas.get(index).cambieElementos();
+    }
+    
+    public void guardeTarea (String nombre, int id, String descripcion)
+    {
+        //Guarda en un archivo .txt la info de la tarea
+        //Esto incluye tambien el nombre, id y descripción de la lista
     }
 }
