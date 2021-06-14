@@ -25,8 +25,10 @@ public class Agenda
     {
         //Aca crea una lista de tareas nueva, guarda su informacion y la añade a la coleccion.
         //Se ha asumido que el ID asociado a la primer lista es 1, a la segunda lista es 2, y así va asignandolo
-        Lista newList = new Lista (coleccion.size() + 1);
-        newList.guardeTareas();
+        String nombre = JOptionPane.showInputDialog(null,"Ingrese el nombre de la lista");
+        String descripcion = JOptionPane.showInputDialog(null,"Ingrese una breve descripción de la lista");
+        Lista newList = new Lista (coleccion.size() + 1,nombre,descripcion);
+        newList.ingreseTareas();
         coleccion.add(newList);
     }
     
@@ -53,7 +55,7 @@ public class Agenda
     }
     
     /**
-     * Método que modifica la información de alguna de las listas de la colección.
+     * Método que modifica la información de alguna de las listas.
      */
     public void modificarLista ()
     {
@@ -66,13 +68,25 @@ public class Agenda
         //Luego pone un menu del JOptionPane que le muestre al usuario esas opciones de arriba y escoja cual lista modificar.
         //Digamos que el ID de la lista a modificar es id.
         //Invoca un metodo de la clase Lista que le permite al usuario modificar cualquier informacion de esa lista de tareas.
-        String ans = (String)(JOptionPane.showInputDialog(null,"Seleccione la lista de tareas a eliminar?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
+        String ans = (String)(JOptionPane.showInputDialog(null,"Seleccione la lista de tareas a modificar","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
         int index = -1;
         for (int j = 0; j<coleccion.size(); j++)
         {
             if(ops[j].equals(ans)) {index = j;}
         }
-        coleccion.get(index).modifiqueInfo();
+        
+        String [] ops1 = {"Modificar nombre, descripción o ID de la lista","Modificar información de alguna tarea"};
+        String ans1 = (String)(JOptionPane.showInputDialog(null,"Seleccione la modificación a realizar","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
+        
+        switch(ans1)
+        {
+            case "Modificar nombre, descripción o ID de la lista":
+                coleccion.get(index).modifiqueAtributos();
+                break;
+            case "Modificar información de alguna tarea":
+                coleccion.get(index).modifiqueTarea();
+                break;
+        }
     }
     
     /**
@@ -92,9 +106,9 @@ public class Agenda
     }
     
     /**
-     * Método que permite acceder a la información más específica de una lista en particular.
+     * Método que devuelve en String la info de alguna nota de alguna tarea de alguna lista.
      */
-    public void consultarLista ()
+    public String muestreLista ()
     {
         String [] ops = new String [coleccion.size()];
         for (int i = 0; i<coleccion.size(); i++)
@@ -110,6 +124,6 @@ public class Agenda
         {
             if(ops[j].equals(ans)) {index = j;}
         }
-        coleccion.get(index).consulte();
+        return coleccion.get(index).muestreTarea();
     }
 }
