@@ -44,13 +44,7 @@ public class Lista
         }
     }
     
-    /**
-     * Devuelve el nombre de la lista.
-     */
-    public String deNombre ()
-    {
-        return nombre;
-    }
+   
 
     /**
      * Método que permite modificar cualquiera de los atributos.
