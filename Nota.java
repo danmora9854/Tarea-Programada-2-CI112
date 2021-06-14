@@ -28,21 +28,7 @@ public class Nota
         while (hayElementos)
         {
             String elemento = (String)(JOptionPane.showInputDialog(null,"Ingrese tipo de elemento."));
-            int cantidad = 0;
-            boolean invalid = true;
-            while(invalid) {
-                try {
-                    String s = (String) (JOptionPane.showInputDialog(null,"Ingrese la cantidad del elemento."));
-                    cantidad = Integer.parseInt(s);
-                    invalid = false;
-                    if (cantidad < 0) {
-                        JOptionPane.showMessageDialog(null,"¡El número debe ser un entero positivo!");
-                        invalid = true;
-                    }
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null,"¡Ingrese un número válido!");
-                }
-            }
+            String cantidad = (String)(JOptionPane.showInputDialog(null,"Ingrese cantidad de elemento."));
             recurso.add(elemento);
             cantidades.add(cantidad);
             
