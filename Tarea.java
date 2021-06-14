@@ -12,11 +12,10 @@ public class Tarea
 {
     ArrayList <Nota> notas;
     int id;
-    String estado;
     String titulo;
     public Tarea (int id)
     {
-        estado = "Pendiente";
+        
         titulo = "";
         notas = new ArrayList <Nota> ();
         notas.add(new Nota ("Información Administrativa"));
@@ -29,10 +28,12 @@ public class Tarea
         infoAdmin.recurso.add("Fecha de inicio");
         infoAdmin.recurso.add("Fecha de fin");
         infoAdmin.recurso.add("Estimación");
+        infoAdmin.recurso.add("Estado");
         for (int i = 0; i<8; i++)
         {
             infoAdmin.cantidades.add("");
         }
+        infoAdmin.cantidades.add("Pendiente");
         this.id = id;
     }
     
@@ -80,4 +81,5 @@ public class Tarea
         }
         return notas.get(index).muestreElementos();
     }
+    //Metodo de cambio de notas
 }
