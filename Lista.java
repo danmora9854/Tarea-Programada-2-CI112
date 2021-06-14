@@ -16,14 +16,11 @@ public class Lista
     public ArrayList <Tarea> coleccion;//Acá va guardando las distintas tareas
     public ArrayList <Integer> registro;//Acá va guardando el ID de cada tarea
     
-    public Lista (int id)
+    public Lista (int id, String nombre, String descripcion)
     {
         this.id = id;
-
-        //Deberia implementarse que el JOptionPane le pregunta ahi al usuario por el nombre y descripcion
-        nombre = "";
-        descripcion = "";
-        
+        this.nombre = nombre;
+        this.descripcion = descripcion;
         coleccion = new ArrayList <Tarea> ();
         registro = new ArrayList <Integer> ();
     }
@@ -34,14 +31,16 @@ public class Lista
     public void guardeTareas ()
     {
         boolean continua = true;
-        while (continua)
+        do
         {
             
             Tarea newTarea = new Tarea ();
             newTarea.agregueInfo();
             
-            //Mete un JOption que pregunte si quiere ingresar otra tarea. Si no es así, hace continua = false.
-        }
+           String [] ops = {"Sí","No"};
+           String ans = (String)(JOptionPane.showInputDialog(null,"Desea agregar alguna tarea más?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
+           if(ans.equals("No")){continua=false}
+        }while(continua==true)
     }
     
    
@@ -59,7 +58,7 @@ public class Lista
     /**
      * Método que despliega un menu al usuario y le permite elegir qué ver de la lista.
      */
-    public void consulte ()
+    public void consulteLista()
     {
         
     }
