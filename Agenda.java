@@ -28,8 +28,6 @@ public class Agenda
         Lista newList = new Lista (coleccion.size() + 1);
         newList.guardeTareas();
         coleccion.add(newList);
-        
-        //En algun punto avisele al usuario del ID que se le ha asignado a su lista nueva
     }
     
     /**
@@ -79,10 +77,10 @@ public class Agenda
     
     /**
      * Método que imprime en terminal a todas las listas presentes en la coleccion.
-     * Para cada lista de tareas imprime el nombre, ID y descripción de esta. Luego van las tareas contenidas dentro.
+     * Para cada lista de tareas imprime el nombre, ID y descripción de esta.
      * Todo lo anterior va en un bloque. Luego se deja un espacio en blanco y se sigue con otro bloque de otra lista de tareas.
      */
-    public void consultarColeccion ()
+    public String muestreColeccion ()
     {
         String msg = "";
         for (int i = 0; i<coleccion.size(); i++)
@@ -90,7 +88,7 @@ public class Agenda
             msg += coleccion.get(i).nombre + " (ID: " + (i+1) + ")\n";
             msg += coleccion.get(i).descripcion + "\n\n";
         }
-        JOptionPane.showMessageDialog(null,msg);
+        return msg;
     }
     
     /**
