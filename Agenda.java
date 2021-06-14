@@ -126,4 +126,32 @@ public class Agenda
         }
         return coleccion.get(index).muestreTarea();
     }
+    
+    /**
+     * Método que lee un archivo .txt con la data de una tarea.
+     * Al usuario se le abre una ventana para seleccionar la localización del archivo.
+     * Si la lista a la que pertenece esta tarea no existe, se crea y añade a la agenda.
+     */
+    public void leaTarea()
+    {
+        //Primero lee toda la data de la tarea y la mantiene por acá en memoria
+        
+        //Revisa si la lista a la que pertenece la tarea existe en la agenda.
+        //Si es así basta con hacer que la lista añada la tarea que le decimos a su colección.
+        //Si no es así se crea una lista nueva y ahí se añade la tarea.
+
+    }
+
+    /**
+     * Método que guarda todas las listas de la agenda en archivos .txt.
+     * Todos los archivos son guardados por default en la carpeta del proyecto.
+     * Hay un archivo por tarea.
+     */
+    public void guardeAgenda()
+    {
+        for (int i = 0; i<coleccion.size(); i++)
+        {
+            coleccion.get(i).guardeLista();
+        }
+    }
 }
