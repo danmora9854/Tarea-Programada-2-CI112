@@ -29,6 +29,7 @@ public class Agenda
         String descripcion = JOptionPane.showInputDialog(null,"Ingrese una breve descripción de la lista");
         Lista newList = new Lista (coleccion.size() + 1,nombre,descripcion);
         newList.ingreseTareas();
+        newList.sortTareas();
         coleccion.add(newList);
     }
     
@@ -74,8 +75,8 @@ public class Agenda
         {
             if(ops[j].equals(ans)) {index = j;}
         }
-        
-        String [] ops1 = {"Modificar nombre, descripción o ID de la lista","Modificar información de alguna tarea"};
+        //do while aqui?
+         String [] ops1 = {"Modificar nombre, descripción o ID de la lista","Modificar información de alguna tarea"};
         String ans1 = (String)(JOptionPane.showInputDialog(null,"Seleccione la modificación a realizar","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
         
         switch(ans1)
@@ -87,6 +88,7 @@ public class Agenda
                 coleccion.get(index).modifiqueTarea();
                 break;
         }
+        coleccion.get(index).sortTareas();
     }
     
     /**
@@ -132,7 +134,7 @@ public class Agenda
      * Al usuario se le abre una ventana para seleccionar la localización del archivo.
      * Si la lista a la que pertenece esta tarea no existe, se crea y añade a la agenda.
      */
-    public void leaTarea()
+    public void leaLista()
     {
         //Primero lee toda la data de la tarea y la mantiene por acá en memoria
         
@@ -153,5 +155,50 @@ public class Agenda
         {
             coleccion.get(i).guardeLista();
         }
+    }
+    public static void main(String a[]){
+        Agenda agenda=new Agenda;
+        
+        
+        String[] ops1={"Crear una lista nueva","Leer alguna lista"};
+        String ans1 = (String)(JOptionPane.showInputDialog(null,"¿Qué desea hacer para comenzar?","Escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
+        if(ans1.equals("Salir")){flag=false;}
+        else{
+        
+        switch(ans1){
+        case "Crear una lista nueva":
+            agenda.agregarLista();
+        break;
+        case "Leer alguna lista":
+            agenda.leaLista();
+        break;
+        }
+        }
+        boolean flag=true;
+        do{
+        String[] ops2={"Agregar una nueva lista de tareas","Eliminar una lista","Modificar una lista","Mostrar todas las listas guardadas","Leer alguna lista","Guardar la agenda y salir"};
+        String ans2 = (String)(JOptionPane.showInputDialog(null,"¿Qué desea hacer?","Escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops2, ops2[0]));
+        if(ans2.equals("Guardar la agenda y salir")){agenda.guardeAgenda();flag=false;}
+        else{
+        //Aqui vienen los resultados de las opciones
+        switch(ans2){
+        case "Agregar una nueva lista de tareas":
+            agenda.agregarLista();
+        break;
+        case "Eliminar una lista":
+            agenda.eliminarLista();
+        break;
+        case "Modificar una lista":
+            agenda.modificarLista();
+        break;
+        case "Mostrar todas las listas guardadas":
+            agenda.muestreColeccion();
+        break; 
+        case "Leer alguna lista":
+            agenda.leaLista();
+        break;         
+        }
+        }
+        }while(flag==true);
     }
 }
