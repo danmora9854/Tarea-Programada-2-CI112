@@ -6,8 +6,11 @@
  * @version (08.06.2021)
  */
 
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.util.*;
+import javax.swing.*;
 public class Lista
 {
     public String nombre;
@@ -47,6 +50,8 @@ public class Lista
             
             Tarea newTarea = new Tarea (id_job);
             newTarea.agregueInfo();
+            coleccion.add(newTarea);
+            registro.add(id_job);
             
             String [] ops = {"Sí","No"};
             String ans = (String)(JOptionPane.showInputDialog(null,"Desea agregar alguna tarea más?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
@@ -135,9 +140,37 @@ public class Lista
      */
     public void guardeLista()
     {
-        for (int i = 0; i<coleccion.size(); i++)
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        int result = fileChooser.showSaveDialog(null);
+        if (result == JFileChooser.CANCEL_OPTION)
+            return;
+
+        File fileName = fileChooser.getSelectedFile();
+
+        if (fileName == null || fileName.getName().equals(""))
         {
-            coleccion.get(i).guardeTarea(nombre,id,descripcion);
+            JOptionPane.showMessageDialog(null, "ERROR", "Nombre de archivo es inválido",JOptionPane.ERROR_MESSAGE);
+        }
+        else
+        {
+            try
+            {
+                BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
+                out.write(nombre + ";" + id + ";" + descripcion + ";");
+                out.flush();
+                out.newLine();
+                //Guarda info basica de la lista
+                for (int i = 0; i<coleccion.size(); i++)
+                {
+                    coleccion.get(i).guardeTarea(out);
+                }
+                out.close();
+            }
+            catch (IOException e)
+            {
+                System.out.println("Excepcion al grabar archivo");
+            }
         }
     }
 }
