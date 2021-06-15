@@ -1,8 +1,8 @@
 
 /**
- * Clase que maneja todas las listas de tareas.
+ * Clase para manejar la informacion de una tarea
  *
- * @author (Juan José Bermúdez Vargas y Daniel Mora Mora)
+ * @author (Juan José Bermúdez Vargas y Daniel Mora Mora )
  * @version (08.06.2021)
  */
 
@@ -11,273 +11,173 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.*;
 import javax.swing.*;
-public class Agenda
+public class Tarea
 {
-    //Aca va a guardar las diversas listas de tareas
-    public ArrayList <Lista> coleccion;
-    
-    public Agenda ()
-    {
-        coleccion = new ArrayList <Lista> ();
-    }
-    
-    /**
-     * Método que agrega una lista de tareas a la colección.
-     */
-    public void agregarLista ()
-    {
-        //Aca crea una lista de tareas nueva, guarda su informacion y la añade a la coleccion.
-        //Se ha asumido que el ID asociado a la primer lista es 1, a la segunda lista es 2, y así va asignandolo
-        String nombre = JOptionPane.showInputDialog(null,"Ingrese el nombre de la lista");
-        String descripcion = JOptionPane.showInputDialog(null,"Ingrese una breve descripción de la lista");
-        Lista newList = new Lista (coleccion.size() + 1,nombre,descripcion);
-        newList.ingreseTareas();
-        newList.sortTareas();
-        coleccion.add(newList);
-    }
-    
-    /**
-     * Método que elimina una lista de tareas de la colección.
-     */
-    public void eliminarLista ()
-    {
-        String [] ops = new String [coleccion.size()];
-        for (int i = 0; i<coleccion.size(); i++)
+    ArrayList <Nota> notas;
+    int id;
+    String titulo;
+    String estado;
+    public Tarea (int id)
+    { 
+        titulo = "";
+        this.id = id;
+        notas = new ArrayList <Nota> ();
+        notas.add(new Nota ("Información Administrativa"));
+        Nota infoAdmin = notas.get(0);
+        infoAdmin.recurso.add("Grado de avance");
+        infoAdmin.recurso.add("Colaborador");
+        infoAdmin.recurso.add("Tiempo asignado");
+        infoAdmin.recurso.add("Prioridad");
+        infoAdmin.recurso.add("Complejidad");
+        infoAdmin.recurso.add("Fecha de inicio");
+        infoAdmin.recurso.add("Fecha de fin");
+        infoAdmin.recurso.add("Estimación");
+        
+        for (int i = 0; i<8; i++)
         {
-            ops[i] = coleccion.get(i).nombre + " (ID: " + (i+1) + ")";
+            infoAdmin.cantidades.add("N/A");
         }
         
-        //Luego pone un menu del JOptionPane que le muestre al usuario esas opciones de arriba y escoja cual lista eliminar.
-        //Despues elimina la lista escogida de la coleccion y del registro
-        String ans = (String)(JOptionPane.showInputDialog(null,"Seleccione la lista de tareas a eliminar?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
-        int index = -1;
-        for (int j = 0; j<coleccion.size(); j++)
-        {
-            if(ops[j].equals(ans)) {index = j;}
-        }
-        coleccion.remove(index);
+        estado="Pendiente";
     }
     
-    /**
-     * Método que modifica la información de alguna de las listas.
-     */
-    public void modificarLista ()
+    public void agregueInfo ()
     {
-        String [] ops = new String [coleccion.size()];
-        for (int i = 0; i<coleccion.size(); i++)
+        titulo = JOptionPane.showInputDialog(null,"Ingrese título de la tarea");
+        //Un menu donde elige qué de infoAdmin llenar
+        String [] ops = {"Grado de avance","Colaborador","Tiempo Asignado","Prioridad","Complejidad","Fecha de inicio","Fecha de fin","Estimación","Ninguna"};
+        boolean sigueRelleno = true;
+        String ans = "";
+        while (sigueRelleno)
         {
-            ops[i] = coleccion.get(i).nombre + " (ID: " + (i+1) + ")";
+            ans = (String)(JOptionPane.showInputDialog(null,"Cuál entrada desea rellenar?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
+            int index = -1;
+            for (int i = 0; i<ops.length; i++)
+            {
+                if (ops[i].equals(ans)) {index = i;}
+            }
+            if (index != ops.length-1)
+            {
+                String data = (String)(JOptionPane.showInputDialog(null,"Ingrese los datos de la entrada"));
+                notas.get(0).cantidades.set(index,data);
+            }
+            else {sigueRelleno = false;}
         }
         
-        //Luego pone un menu del JOptionPane que le muestre al usuario esas opciones de arriba y escoja cual lista modificar.
-        //Digamos que el ID de la lista a modificar es id.
-        //Invoca un metodo de la clase Lista que le permite al usuario modificar cualquier informacion de esa lista de tareas.
-        String ans = (String)(JOptionPane.showInputDialog(null,"Seleccione la lista de tareas a modificar","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
-        int index = -1;
-        for (int j = 0; j<coleccion.size(); j++)
+        //Por último pregunta si quiere agregar alguna nota. Las notas son listas simples de elementos. Como en el ejemplo que sale en el word
+        //que mencionan una lista de recursos de la tarea.
+        String [] ops1 = {"Sí","No"};
+        String ans1 = (String)(JOptionPane.showInputDialog(null,"¿Desea ingresar alguna lista extra de elementos util para el manejo de la tarea?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
+        boolean hayNotas = (ans1.equals("Sí"))?true:false;
+        while (hayNotas)
         {
-            if(ops[j].equals(ans)) {index = j;}
+            //pregunta con JOptionPane por el titulo de la nota.
+            String titulo = (String)(JOptionPane.showInputDialog(null,"Ingrese título de la lista"));
+            Nota newNote = new Nota (titulo);
+            newNote.guardeElementos();
+            notas.add(newNote);
+            
+            ans1 = (String)(JOptionPane.showInputDialog(null,"¿Desea ingresar otra lista extra de elementos util para el manejo de la tarea?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
+            hayNotas = (ans1.equals("Sí"))?true:false;
         }
-        //do while aqui?
-         String [] ops1 = {"Modificar nombre, descripción o ID de la lista","Modificar información de alguna tarea"};
-        String ans1 = (String)(JOptionPane.showInputDialog(null,"Seleccione la modificación a realizar","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
-        
-        switch(ans1)
-        {
-            case "Modificar nombre, descripción o ID de la lista":
-                coleccion.get(index).modifiqueAtributos();
-                break;
-            case "Modificar información de alguna tarea":
-                coleccion.get(index).modifiqueTarea();
-                break;
-        }
-        coleccion.get(index).sortTareas();
     }
     
-    /**
-     * Método que imprime en terminal a todas las listas presentes en la coleccion.
-     * Para cada lista de tareas imprime el nombre, ID y descripción de esta.
-     * Todo lo anterior va en un bloque. Luego se deja un espacio en blanco y se sigue con otro bloque de otra lista de tareas.
-     */
-    public String muestreColeccion ()
+    public String muestreNota()
     {
-        String msg = "";
-        for (int i = 0; i<coleccion.size(); i++)
+        String [] ops = {"Ver información básica de la tarea","Ver información interna de la tarea"};
+        String qans = (String)(JOptionPane.showInputDialog(null,"¿Qué desea hacer?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
+        if (qans.equals("Ver información básica de la tarea"))
         {
-            msg += coleccion.get(i).nombre + " (ID: " + (i+1) + ")\n";
-            msg += "Descripción: " + coleccion.get(i).descripcion + "\n\n";
+            String res = "Tarea: " + titulo + " (ID: " + id + ")\nEstado: " + estado;
+            return res;
         }
-        return msg;
-    }
-    
-    /**
-     * Método que devuelve en String la info de alguna nota de alguna tarea de alguna lista.
-     */
-    public String muestreLista ()
-    {
-        String [] ops = new String [coleccion.size()];
-        for (int i = 0; i<coleccion.size(); i++)
-        {
-            ops[i] = coleccion.get(i).nombre + " (ID: " + (i+1) + ")";
-        }
-        
-        //Luego pone un menu del JOptionPane que le muestre al usuario esas opciones de arriba y escoja cual lista modificar.
-        //Digamos que el ID de la lista a modificar es id.
-        String ans = (String)(JOptionPane.showInputDialog(null,"Seleccione la lista que desea ver?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
-        int index = -1;
-        for (int j = 0; j<coleccion.size(); j++)
-        {
-            if(ops[j].equals(ans)) {index = j;}
-        }
-        return coleccion.get(index).muestreTarea();
-    }
-    
-    /**
-     * Método que lee un archivo .txt con la data de una tarea.
-     * Al usuario se le abre una ventana para seleccionar la localización del archivo.
-     * Si la lista a la que pertenece esta tarea no existe, se crea y añade a la agenda.
-     */
-    public void leaLista()
-    {
-        String nombre = "";
-        String descripcion = "";
-        int id = 0;
-        
-        //Primero lee toda la data de la tarea y la mantiene por acá en memoria
-        JFileChooser fileChooser = new JFileChooser();  //Ventana para el manejo de directorios
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        int result = fileChooser.showOpenDialog(null);  //intenta abrir diálogo para manejo de dir
-
-        if (result == JFileChooser.CANCEL_OPTION)       //usuario da click sobre la X de la ventana
-            return;                                                                    //se obliga a terminar acá
-
-        File fileName = fileChooser.getSelectedFile();        //tome archivo seleccionado
-
-        if (fileName == null || fileName.getName().equals(""))
-            JOptionPane.showMessageDialog(null, "ERROR", "Nombre de archivo es inválido",
-                JOptionPane.ERROR_MESSAGE);
         else
         {
-            try
-            {
-                //El BufferedReader lee eficientemente caracteres, arrays y lineas
-                //toma los bytes del FileReader, los convierte a char y los guarda
-                BufferedReader in = new BufferedReader(new FileReader(fileName));
-                String str = in.readLine();
-                StringTokenizer st = new StringTokenizer(str, ";");
-                nombre = st.nextToken();
-                id = Integer.parseInt(st.nextToken());
-                descripcion = st.nextToken();
-                Lista lista = new Lista(id,nombre,descripcion);
-                ArrayList <Tarea> tareas = new ArrayList <Tarea> (); 
-                ArrayList <Integer> registros = new ArrayList <Integer> ();
-                
-                while ((str = in.readLine()) != null)                   //mientras hallan datos
-                {
-                    // manejo de los datos de entrada (str) y los pasa a matriz
-                    StringTokenizer st2 = new StringTokenizer(str, ";");
-                    int id_tarea = Integer.parseInt(st2.nextToken());
-                    registros.add(id_tarea);
-                    Tarea tarea = new Tarea (id_tarea);
-                    tarea.titulo = st2.nextToken();
-                    tarea.estado = st2.nextToken();
-                    
-                    while ((str = in.readLine()) != null)
-                    {   
-                        StringTokenizer st3 = new StringTokenizer(str,";");
-                        String token1 = st3.nextToken();
-                        if (token1.equals("FIN DE TAREA"))
-                        {
-                            break;
-                        }
-                        
-                        Nota nota = new Nota (token1);
-                        str = in.readLine();
-                        StringTokenizer st4 = new StringTokenizer(str,";");
-                        while (st4.hasMoreTokens())
-                        {
-                            nota.recurso.add(st4.nextToken());
-                        }
-                        str = in.readLine();
-                        StringTokenizer st5 = new StringTokenizer(str,";");
-                        while (st5.hasMoreTokens())
-                        {
-                            nota.cantidades.add(st5.nextToken());
-                        }
-                        
-                        tarea.notas.add(nota);
-                    }
-                    tareas.add(tarea);
-                }
-                lista.coleccion = tareas;
-                lista.registro = registros;
-                coleccion.add(lista);
-                in.close();
+            String[] nombresnotas=new String[notas.size()];
+            for(int j=0;j<notas.size();j++){
+                nombresnotas[j]=notas.get(j).titulo;
             }
-            catch (IOException e)
+            String ans = (String)(JOptionPane.showInputDialog(null,"¿Cuál información desea ver?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, nombresnotas, nombresnotas[0]));
+            int index=-1;
+            for (int i = 0; i<nombresnotas.length; i++)
             {
-                System.out.println("Excepcion");
+                if (nombresnotas[i].equals(ans)) {index = i;}
             }
+            return notas.get(index).muestreElementos();
         }
     }
-
+    
     /**
-     * Método que guarda todas las listas de la agenda en archivos .txt.
-     * Todos los archivos son guardados por default en la carpeta del proyecto.
-     * Hay un archivo por tarea.
+     * Método que modifica atributos básicos de la tarea
      */
-    public void guardeAgenda()
+    public void modifiqueAtributos()
     {
-        for (int i = 0; i<coleccion.size(); i++)
+        String [] ops = {"Título","ID"};
+        String ans = (String)(JOptionPane.showInputDialog(null,"Seleccione el atributo a modificar","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
+        String newVal = JOptionPane.showInputDialog(null,"Ingrese el nuevo valor del atributo. Recuerde que si cambia el ID este debe ser un número entero.");
+        switch(ans)
         {
-            coleccion.get(i).guardeLista();
-        }
+            case "Título":
+                titulo = newVal;
+                break;
+            case "ID":
+                id = Integer.parseInt(newVal);
+                break;
+        }        
     }
-    public static void main(String a[]){
-        Agenda agenda=new Agenda ();
-        
-        String[] ops1={"Crear una lista nueva","Leer alguna lista"};
-        String ans1 = (String)(JOptionPane.showInputDialog(null,"¿Qué desea hacer para comenzar?","Escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
-        switch(ans1){
-            case "Crear una lista nueva":
-                agenda.agregarLista();
-                break;
-            case "Leer alguna lista":
-                agenda.leaLista();
-                break;
+    
+    /**
+     * Método de cambio de notas
+     */
+    public void modifiqueNota()
+    {
+        String[] nombresnotas=new String[notas.size()];
+        for(int j=0;j<notas.size();j++){
+            nombresnotas[j]=notas.get(j).titulo;
         }
-        boolean flag=true;
-        do{
-            String[] ops2={"Agregar una nueva lista de tareas","Eliminar una lista","Modificar una lista","Mostrar todas las listas guardadas","Ver contenidos de una lista","Leer alguna lista","Guardar la agenda y salir"};
-            String ans2 = (String)(JOptionPane.showInputDialog(null,"¿Qué desea hacer?","Escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops2, ops2[0]));
-            if(ans2.equals("Guardar la agenda y salir"))
+        String ans = (String)(JOptionPane.showInputDialog(null,"¿Cuál nota desea modificar?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, nombresnotas, nombresnotas[0]));
+        int index=-1;
+        for (int i = 0; i<nombresnotas.length; i++)
+        {
+            if (nombresnotas[i].equals(ans)) {index = i;}
+        }
+        notas.get(index).cambieElementos();
+    }
+    
+    public void guardeTarea (BufferedWriter out)
+    {
+        try
+        { 
+            out.write(id + ";" + titulo + ";" + estado + ";");
+            out.flush();
+            out.newLine();
+            for (int i = 0; i<notas.size(); i++)
             {
-                agenda.guardeAgenda();
-                flag=false;
-            }
-            else{
-                //Aqui vienen los resultados de las opciones
-                switch(ans2){
-                    case "Agregar una nueva lista de tareas":
-                        agenda.agregarLista();
-                        break;
-                    case "Eliminar una lista":
-                        agenda.eliminarLista();
-                        break;
-                    case "Modificar una lista":
-                        agenda.modificarLista();
-                        break;
-                    case "Mostrar todas las listas guardadas":
-                        JOptionPane.showMessageDialog(null,agenda.muestreColeccion());
-                        break; 
-                    case "Ver contenidos de una lista":
-                        JOptionPane.showMessageDialog(null,agenda.muestreLista());
-                        break;
-                    case "Leer alguna lista":
-                        agenda.leaLista();
-                        break;         
+                Nota nota = notas.get(i);
+                out.write(nota.titulo + ";");
+                out.flush();
+                out.newLine();
+                String save = "";
+                for (int j = 0; j<nota.recurso.size(); j++)
+                {
+                    save += nota.recurso.get(j) + ";";
                 }
+                out.write(save);
+                out.flush();
+                out.newLine();
+                save = "";
+                for (int k = 0; k<nota.recurso.size(); k++)
+                {
+                    save += nota.cantidades.get(k) + ";";
+                }
+                out.write(save);
+                out.flush();
+                out.newLine();
             }
-        }while(flag==true);
+        }
+        catch (IOException e)
+        {
+            System.out.println("Excepcion al grabar archivo");
+        }
     }
 }
