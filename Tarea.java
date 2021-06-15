@@ -34,7 +34,7 @@ public class Tarea
         infoAdmin.recurso.add("Estado");
         for (int i = 0; i<8; i++)
         {
-            infoAdmin.cantidades.add("");
+            infoAdmin.cantidades.add("N/A");
         }
         infoAdmin.cantidades.add("Pendiente");
     }
