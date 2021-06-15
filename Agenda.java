@@ -105,7 +105,7 @@ public class Agenda
         for (int i = 0; i<coleccion.size(); i++)
         {
             msg += coleccion.get(i).nombre + " (ID: " + (i+1) + ")\n";
-            msg += coleccion.get(i).descripcion + "\n\n";
+            msg += "Descripción: " + coleccion.get(i).descripcion + "\n\n";
         }
         return msg;
     }
@@ -123,7 +123,7 @@ public class Agenda
         
         //Luego pone un menu del JOptionPane que le muestre al usuario esas opciones de arriba y escoja cual lista modificar.
         //Digamos que el ID de la lista a modificar es id.
-        String ans = (String)(JOptionPane.showInputDialog(null,"Seleccione la lista de tareas a eliminar?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
+        String ans = (String)(JOptionPane.showInputDialog(null,"Seleccione la lista que desea ver?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
         int index = -1;
         for (int j = 0; j<coleccion.size(); j++)
         {
@@ -233,45 +233,50 @@ public class Agenda
         }
     }
     public static void main(String a[]){
-        Agenda agenda=new Agenda;
-        
+        Agenda agenda=new Agenda ();
         
         String[] ops1={"Crear una lista nueva","Leer alguna lista"};
         String ans1 = (String)(JOptionPane.showInputDialog(null,"¿Qué desea hacer para comenzar?","Escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
         switch(ans1){
-        case "Crear una lista nueva":
-            agenda.agregarLista();
-        break;
-        case "Leer alguna lista":
-            agenda.leaLista();
-        break;
-        
+            case "Crear una lista nueva":
+                agenda.agregarLista();
+                break;
+            case "Leer alguna lista":
+                agenda.leaLista();
+                break;
         }
         boolean flag=true;
         do{
-        String[] ops2={"Agregar una nueva lista de tareas","Eliminar una lista","Modificar una lista","Mostrar todas las listas guardadas","Leer alguna lista","Guardar la agenda y salir"};
-        String ans2 = (String)(JOptionPane.showInputDialog(null,"¿Qué desea hacer?","Escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops2, ops2[0]));
-        if(ans2.equals("Guardar la agenda y salir")){agenda.guardeAgenda();flag=false;}
-        else{
-        //Aqui vienen los resultados de las opciones
-        switch(ans2){
-        case "Agregar una nueva lista de tareas":
-            agenda.agregarLista();
-        break;
-        case "Eliminar una lista":
-            agenda.eliminarLista();
-        break;
-        case "Modificar una lista":
-            agenda.modificarLista();
-        break;
-        case "Mostrar todas las listas guardadas":
-            agenda.muestreColeccion();
-        break; 
-        case "Leer alguna lista":
-            agenda.leaLista();
-        break;         
-        }
-        }
+            String[] ops2={"Agregar una nueva lista de tareas","Eliminar una lista","Modificar una lista","Mostrar todas las listas guardadas","Ver contenidos de una lista","Leer alguna lista","Guardar la agenda y salir"};
+            String ans2 = (String)(JOptionPane.showInputDialog(null,"¿Qué desea hacer?","Escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops2, ops2[0]));
+            if(ans2.equals("Guardar la agenda y salir"))
+            {
+                agenda.guardeAgenda();
+                flag=false;
+            }
+            else{
+                //Aqui vienen los resultados de las opciones
+                switch(ans2){
+                    case "Agregar una nueva lista de tareas":
+                        agenda.agregarLista();
+                        break;
+                    case "Eliminar una lista":
+                        agenda.eliminarLista();
+                        break;
+                    case "Modificar una lista":
+                        agenda.modificarLista();
+                        break;
+                    case "Mostrar todas las listas guardadas":
+                        JOptionPane.showMessageDialog(null,agenda.muestreColeccion());
+                        break; 
+                    case "Ver contenidos de una lista":
+                        JOptionPane.showMessageDialog(null,agenda.muestreLista());
+                        break;
+                    case "Leer alguna lista":
+                        agenda.leaLista();
+                        break;         
+                }
+            }
         }while(flag==true);
     }
 }
