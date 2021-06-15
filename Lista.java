@@ -8,9 +8,9 @@
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
-import java.util.*;
-import javax.swing.*;
+import java.io.File;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 public class Lista
 {
     public String nombre;
@@ -126,7 +126,7 @@ public class Lista
         {
             nombres[i] = coleccion.get(i).titulo;
         }
-        String ans = (String)(JOptionPane.showInputDialog(null,"¿Cuál tarea desea modificar?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, nombres, nombres[0]));
+        String ans = (String)(JOptionPane.showInputDialog(null,"¿Cuál tarea desea ver?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, nombres, nombres[0]));
         int index=-1;
         for (int i = 0; i<nombres.length; i++)
         {
