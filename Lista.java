@@ -8,7 +8,7 @@
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
+import java.io.*;
 import java.util.*;
 import javax.swing.*;
 public class Lista
@@ -82,6 +82,28 @@ public class Lista
     }
     
     /**
+     * Método que comprueba si la tarea de indice index en la coleccion tiene sus tareas anteriores finalizadas.
+     */
+    public boolean compruebePermiso (int index)
+    {
+        if (index != 0)
+        {
+            Tarea anterior = coleccion.get(index-1);
+            if (!(anterior.estado.equals("Finalizada")))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public void creeProxy (int index)
+    {
+        //Añade una tarea juguete con el mismo id que la tarea que queremos iniciar.
+        //Esta tarea debe ser inicializada con el estado = "Finalizada"
+    }
+    
+    /**
      * Método que permite modificar alguna tarea de la lista.
      * Lo que debería hacer es desplegar un menu de donde el usuario elija exactamente qué cambiar.
      * Puede que sea necesario hacer métodos extra dedicados a cambiar cosas específicas.
@@ -112,23 +134,31 @@ public class Lista
                 coleccion.get(index).modifiqueNota();
                 break;
             case "Modificar estado de la tarea":
-                String [] estados = {"Finalizada","Pendiente","Haciendo"};
-                String ans10 = (String)(JOptionPane.showInputDialog(null,"Seleccione la modificación a realizar","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
-                switch(ans10){
-                    case "Finalizada":
-                        coleccion.get(index).modifiqueEstado("Finalizada")
-                        break;
-                    case "Pendiente":
-                        coleccion.get(index).modifiqueEstado("Pendiente")
-                        break;   
-                    case "Haciendo":
-                        coleccion.get(index).modifiqueEstado("Haciendo")
-                        break;    
+                boolean permiso = compruebePermiso(index);
+                if (permiso)
+                {
+                    String [] estados = {"Finalizada","Pendiente","Haciendo"};
+                    String ans2 = (String)(JOptionPane.showInputDialog(null,"Seleccione la modificación a realizar","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
+                    coleccion.get(index).estado = ans2;
+                }
+                else
+                {
+                    String [] ops2 = {"Sí","No"};
+                    String prox_ans = (String)(JOptionPane.showInputDialog(null,"La tarea no puede iniciar sin haber finalizado las tareas anteriores! Desea crear un proxy?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops2, ops2[0]));
+                    switch (prox_ans)
+                    {
+                        case "Sí":
+                            creeProxy(index);
+                            String [] estados = {"Finalizada","Pendiente","Haciendo"};
+                            String ans2 = (String)(JOptionPane.showInputDialog(null,"Seleccione la modificación a realizar","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
+                            coleccion.get(index).estado = ans2;
+                            break;
+                        case "No":
+                            break;
+                    }
                 }
                 break;
         }
-        
-        coleccion.get(index).modifiqueNota();
     }    
     
     /**
@@ -136,18 +166,28 @@ public class Lista
      */
     public String muestreTarea()
     {
-        String [] nombres = new String [coleccion.size()];
-        for (int i = 0; i<nombres.length; i++)
+        String [] ops = {"Ver información básica de la lista","Ver una tarea de la lista"};
+        String qans = (String)(JOptionPane.showInputDialog(null,"¿Qué desea hacer?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
+        if (qans.equals("Ver información básica de la lista"))
         {
-            nombres[i] = coleccion.get(i).titulo;
+            String res = "Lista: " + nombre + " (ID: " + id + ")\nDescripción: " + descripcion;
+            return res;
         }
-        String ans = (String)(JOptionPane.showInputDialog(null,"¿Cuál tarea desea ver?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, nombres, nombres[0]));
-        int index=-1;
-        for (int i = 0; i<nombres.length; i++)
+        else
         {
-            if (nombres[i].equals(ans)) {index = i;}
+            String [] nombres = new String [coleccion.size()];
+            for (int i = 0; i<nombres.length; i++)
+            {
+                nombres[i] = coleccion.get(i).titulo;
+            }
+            String ans = (String)(JOptionPane.showInputDialog(null,"¿Cuál tarea desea ver?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, nombres, nombres[0]));
+            int index=-1;
+            for (int i = 0; i<nombres.length; i++)
+            {
+                if (nombres[i].equals(ans)) {index = i;}
+            }
+            return coleccion.get(index).muestreNota();
         }
-        return coleccion.get(index).muestreNota();
     }
     
     /**
@@ -179,6 +219,9 @@ public class Lista
                 for (int i = 0; i<coleccion.size(); i++)
                 {
                     coleccion.get(i).guardeTarea(out);
+                    out.write("FIN DE TAREA");
+                    out.flush();
+                    out.newLine();
                 }
                 out.close();
             }
@@ -188,15 +231,31 @@ public class Lista
             }
         }
     }
-    public void sortTareas(){
+    
+    public void sortTareas()
+    {
         Collections.sort(registro);
-        Tarea[] arrayTareas=new Tarea[coleccion.size()];
-        int[] arrayID=new int[coleccion.size()];
-        for(int i=0;i<coleccion.size;i++){
-            arrayTareas[i]=coleccion.get(i);
-            arrayID[i]=coleccion.get(i).id;
+        ArrayList <Tarea> arrayTareas = new ArrayList <Tarea> ();
+        int [] arrayID = new int [coleccion.size()];
+        boolean [] flag = new boolean [coleccion.size()];
+        for(int i = 0; i<coleccion.size(); i++){
+            arrayID[i] = coleccion.get(i).id;
+            flag[i] = true;
         }
-        for(int j=0;i<arrayTareas.length-1;i++){
+        for (int j = 0; j<coleccion.size(); j++)
+        {
+            for (int k = 0; k<coleccion.size(); k++)
+            {
+                if ((registro.get(j) == arrayID[k]) && flag[k])
+                {
+                    arrayTareas.add(coleccion.get(k));
+                    flag[k] = false;
+                }
+            }
+        }
+        Collections.copy(coleccion,arrayTareas);
+        
+        /*for(int j=0;j<arrayTareas.length-1;j++){
             for(int k=i+1;k<arrayTareas.length;k++){
                 int temp=0;
                 Tarea tempTarea=null;
@@ -206,14 +265,15 @@ public class Lista
                     arrayID[i]=arrayID[j];
                     arrayTareas[i]=arrayTareas[j];
                     arrayID[j]=temp;
-                    arrayTareas[j]=tempTarea
+                    arrayTareas[j]=tempTarea;
                 }
             }
-        ArrayList<Tarea> tempArray=ArrayList<Tarea>;
-        for(int i=0;i<arrayTareas.length;i++){
-            temp.add(arrayTareas[i]);
-        }
-        Collections.copy(coleccion,tempArray);
-        }
+            ArrayList <Tarea> tempArray = new ArrayList <Tarea> ();
+            for(int i=0;i<arrayTareas.length;i++)
+            {
+                tempArray.add(arrayTareas[i]);
+            }
+            Collections.copy(coleccion,tempArray);
+        }*/
     }
 }
