@@ -180,6 +180,7 @@ public class Agenda
                     registros.add(id_tarea);
                     Tarea tarea = new Tarea (id_tarea);
                     tarea.titulo = st2.nextToken();
+                    tarea.estado = st2.nextToken();
                     
                     while ((str = in.readLine()) != null)
                     {   
