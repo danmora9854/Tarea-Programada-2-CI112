@@ -9,8 +9,8 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
+import java.util.*;
+import javax.swing.*;
 public class Lista
 {
     public String nombre;
@@ -171,6 +171,34 @@ public class Lista
             {
                 System.out.println("Excepcion al grabar archivo");
             }
+        }
+    }
+    public void sortTareas(){
+        Collections.sort(registro);
+        Tarea[] arrayTareas=new Tarea[coleccion.size()];
+        int[] arrayID=new int[coleccion.size()];
+        for(int i=0;i<coleccion.size;i++){
+            arrayTareas[i]=coleccion.get(i);
+            arrayID[i]=coleccion.get(i).id;
+        }
+        for(int j=0;i<arrayTareas.length-1;i++){
+            for(int k=i+1;k<arrayTareas.length;k++){
+                int temp=0;
+                Tarea tempTarea=null;
+                if(arrayID[i]>arrayID[j]){
+                    temp=arrayID[i];
+                    tempTarea=arrayTareas[i];
+                    arrayID[i]=arrayID[j];
+                    arrayTareas[i]=arrayTareas[j];
+                    arrayID[j]=temp;
+                    arrayTareas[j]=tempTarea
+                }
+            }
+        ArrayList<Tarea> tempArray=ArrayList<Tarea>;
+        for(int i=0;i<arrayTareas.length;i++){
+            temp.add(arrayTareas[i]);
+        }
+        Collections.copy(coleccion,tempArray);
         }
     }
 }
