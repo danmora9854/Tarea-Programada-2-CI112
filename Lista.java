@@ -100,7 +100,7 @@ public class Lista
             if (nombres[i].equals(ans)) {index = i;}
         }
         
-        String [] ops1 = {"Modificar título o ID de la tarea","Modificar información interna de la tarea"};
+        String [] ops1 = {"Modificar título o ID de la tarea","Modificar información interna de la tarea","Modificar estado de la tarea"};
         String ans1 = (String)(JOptionPane.showInputDialog(null,"Seleccione la modificación a realizar","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
         
         switch(ans1)
@@ -110,6 +110,21 @@ public class Lista
                 break;
             case "Modificar información interna de la tarea":
                 coleccion.get(index).modifiqueNota();
+                break;
+            case "Modificar estado de la tarea":
+                String [] estados = {"Finalizada","Pendiente","Haciendo"};
+                String ans10 = (String)(JOptionPane.showInputDialog(null,"Seleccione la modificación a realizar","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
+                switch(ans10){
+                    case "Finalizada":
+                        coleccion.get(index).modifiqueEstado("Finalizada")
+                        break;
+                    case "Pendiente":
+                        coleccion.get(index).modifiqueEstado("Pendiente")
+                        break;   
+                    case "Haciendo":
+                        coleccion.get(index).modifiqueEstado("Haciendo")
+                        break;    
+                }
                 break;
         }
         
