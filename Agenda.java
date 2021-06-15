@@ -6,11 +6,8 @@
  * @version (08.06.2021)
  */
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.util.*;
-import javax.swing.*;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 public class Agenda
 {
     //Aca va a guardar las diversas listas de tareas
@@ -238,9 +235,6 @@ public class Agenda
         
         String[] ops1={"Crear una lista nueva","Leer alguna lista"};
         String ans1 = (String)(JOptionPane.showInputDialog(null,"¿Qué desea hacer para comenzar?","Escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
-        if(ans1.equals("Salir")){flag=false;}
-        else{
-        
         switch(ans1){
         case "Crear una lista nueva":
             agenda.agregarLista();
@@ -248,7 +242,7 @@ public class Agenda
         case "Leer alguna lista":
             agenda.leaLista();
         break;
-        }
+        
         }
         boolean flag=true;
         do{
