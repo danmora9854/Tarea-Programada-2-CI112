@@ -16,6 +16,7 @@ public class Tarea
     ArrayList <Nota> notas;
     int id;
     String titulo;
+    String estado;
     public Tarea (int id)
     { 
         titulo = "";
@@ -31,12 +32,13 @@ public class Tarea
         infoAdmin.recurso.add("Fecha de inicio");
         infoAdmin.recurso.add("Fecha de fin");
         infoAdmin.recurso.add("Estimación");
-        infoAdmin.recurso.add("Estado");
+        
         for (int i = 0; i<8; i++)
         {
             infoAdmin.cantidades.add("N/A");
         }
-        infoAdmin.cantidades.add("Pendiente");
+        
+        estado="Pendiente"
     }
     
     public void agregueInfo ()
@@ -130,6 +132,9 @@ public class Tarea
             if (nombresnotas[i].equals(ans)) {index = i;}
         }
         notas.get(index).cambieElementos();
+    }
+    public void modifiqueEstado(String p){
+        estado=p;
     }
     
     public void guardeTarea (BufferedWriter out)
