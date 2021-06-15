@@ -148,7 +148,7 @@ public class Tarea
     {
         try
         { 
-            out.write(titulo + ";" + id + ";");
+            out.write(id + ";" + titulo + ";" + estado + ";");
             out.flush();
             out.newLine();
             for (int i = 0; i<notas.size(); i++)
