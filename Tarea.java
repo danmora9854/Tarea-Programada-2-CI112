@@ -132,63 +132,43 @@ public class Tarea
         notas.get(index).cambieElementos();
     }
     
-    public void guardeTarea (String nombre, int id, String descripcion)
+    public void guardeTarea (BufferedWriter out)
     {
-        //Eventualmente quiero que el metodo de guardeAgenda sea al que se le pregunta donde guardar, y que ahi se guarde todo.
-        //Por ahora lo tengo que para cada tarea se escoge donde guardarla.
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        int result = fileChooser.showSaveDialog(null);
-        if (result == JFileChooser.CANCEL_OPTION)
-            return;
-
-        File fileName = fileChooser.getSelectedFile();
-
-        if (fileName == null || fileName.getName().equals(""))
-            JOptionPane.showMessageDialog(null, "ERROR", "Nombre de archivo es inválido",
-                JOptionPane.ERROR_MESSAGE);
-        else
-        {
-            try
+        try
+        { 
+            out.write(titulo + ";" + id + ";");
+            out.flush();
+            out.newLine();
+            for (int i = 0; i<notas.size(); i++)
             {
-                BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
-                
-                out.write(nombre + ";" + id + ";" + descripcion + ";");
+                Nota nota = notas.get(i);
+                out.write(nota.titulo + ";");
                 out.flush();
                 out.newLine();
-                out.write(titulo + ";" + id + ";");
-                out.flush();
-                out.newLine();
-                
-                for (int i = 0; i<notas.size(); i++)
+                String save = "";
+                for (int j = 0; j<nota.recurso.size(); j++)
                 {
-                    Nota nota = notas.get(i);
-                    out.write(nota.titulo + ";");
-                    out.flush();
-                    out.newLine();
-                    String save = "";
-                    for (int j = 0; j<nota.recurso.size(); j++)
-                    {
-                        save += nota.recurso.get(j) + ";";
-                    }
-                    out.write(save);
-                    out.flush();
-                    out.newLine();
-                    save = "";
-                    for (int k = 0; k<nota.recurso.size(); k++)
-                    {
-                        save += nota.cantidades.get(k) + ";";
-                    }
-                    out.write(save);
-                    out.flush();
-                    out.newLine();
+                    save += nota.recurso.get(j) + ";";
                 }
-                out.close();
+                out.write(save);
+                out.flush();
+                out.newLine();
+                save = "";
+                for (int k = 0; k<nota.recurso.size(); k++)
+                {
+                    save += nota.cantidades.get(k) + ";";
+                }
+                out.write(save);
+                out.flush();
+                out.newLine();
+                out.write("FIN DE NOTA;");
+                out.flush();
+                out.newLine();
             }
-            catch (IOException e)
-            {
-                System.out.println("Excepcion al grabar archivo");
-            }
+        }
+        catch (IOException e)
+        {
+            System.out.println("Excepcion al grabar archivo");
         }
     }
 }
