@@ -38,7 +38,7 @@ public class Tarea
             infoAdmin.cantidades.add("N/A");
         }
         
-        estado="Pendiente"
+        estado="Pendiente";
     }
     
     public void agregueInfo ()
@@ -84,17 +84,27 @@ public class Tarea
     
     public String muestreNota()
     {
-        String[] nombresnotas=new String[notas.size()];
-        for(int j=0;j<notas.size();j++){
-            nombresnotas[j]=notas.get(j).titulo;
-        }
-        String ans = (String)(JOptionPane.showInputDialog(null,"¿Cuál nota desea ver?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, nombresnotas, nombresnotas[0]));
-        int index=-1;
-        for (int i = 0; i<nombresnotas.length; i++)
+        String [] ops = {"Ver información básica de la tarea","Ver información interna de la tarea"};
+        String qans = (String)(JOptionPane.showInputDialog(null,"¿Qué desea hacer?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
+        if (qans.equals("Ver información básica de la tarea"))
         {
-            if (nombresnotas[i].equals(ans)) {index = i;}
+            String res = "Tarea: " + titulo + " (ID: " + id + ")\nEstado: " + estado;
+            return res;
         }
-        return notas.get(index).muestreElementos();
+        else
+        {
+            String[] nombresnotas=new String[notas.size()];
+            for(int j=0;j<notas.size();j++){
+                nombresnotas[j]=notas.get(j).titulo;
+            }
+            String ans = (String)(JOptionPane.showInputDialog(null,"¿Cuál información desea ver?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, nombresnotas, nombresnotas[0]));
+            int index=-1;
+            for (int i = 0; i<nombresnotas.length; i++)
+            {
+                if (nombresnotas[i].equals(ans)) {index = i;}
+            }
+            return notas.get(index).muestreElementos();
+        }
     }
     
     /**
@@ -133,9 +143,6 @@ public class Tarea
         }
         notas.get(index).cambieElementos();
     }
-    public void modifiqueEstado(String p){
-        estado=p;
-    }
     
     public void guardeTarea (BufferedWriter out)
     {
@@ -164,9 +171,6 @@ public class Tarea
                     save += nota.cantidades.get(k) + ";";
                 }
                 out.write(save);
-                out.flush();
-                out.newLine();
-                out.write("FIN DE NOTA;");
                 out.flush();
                 out.newLine();
             }
