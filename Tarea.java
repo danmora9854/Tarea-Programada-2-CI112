@@ -43,15 +43,24 @@ public class Tarea
     {
         titulo = JOptionPane.showInputDialog(null,"Ingrese título de la tarea");
         //Un menu donde elige qué de infoAdmin llenar
-        String [] ops = {"Grado de avance","Colaborador","Tiempo Asignado","Prioridad","Complejidad","Fecha de inicio","Fecha de fin","Estimación"};
-        String ans = (String)(JOptionPane.showInputDialog(null,"Cuál entrada desea rellenar?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
-        int index = -1;
-        for (int i = 0; i<ops.length; i++)
+        String [] ops = {"Grado de avance","Colaborador","Tiempo Asignado","Prioridad","Complejidad","Fecha de inicio","Fecha de fin","Estimación","Ninguna"};
+        boolean sigueRelleno = true;
+        String ans = "";
+        while (sigueRelleno)
         {
-            if (ops[i].equals(ans)) {index = i;}
+            ans = (String)(JOptionPane.showInputDialog(null,"Cuál entrada desea rellenar?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
+            int index = -1;
+            for (int i = 0; i<ops.length; i++)
+            {
+                if (ops[i].equals(ans)) {index = i;}
+            }
+            if (index != ops.length-1)
+            {
+                String data = (String)(JOptionPane.showInputDialog(null,"Ingrese los datos de la entrada"));
+                notas.get(0).cantidades.set(index,data);
+            }
+            else {sigueRelleno = false;}
         }
-        String data = (String)(JOptionPane.showInputDialog(null,"Ingrese los datos de la entrada"));
-        notas.get(0).cantidades.set(index,data);
         
         //Por último pregunta si quiere agregar alguna nota. Las notas son listas simples de elementos. Como en el ejemplo que sale en el word
         //que mencionan una lista de recursos de la tarea.
@@ -66,7 +75,7 @@ public class Tarea
             newNote.guardeElementos();
             notas.add(newNote);
             
-            ans = (String)(JOptionPane.showInputDialog(null,"¿Desea ingresar otra lista extra de elementos util para el manejo de la tarea?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
+            ans1 = (String)(JOptionPane.showInputDialog(null,"¿Desea ingresar otra lista extra de elementos util para el manejo de la tarea?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
             hayNotas = (ans1.equals("Sí"))?true:false;
         }
     }
