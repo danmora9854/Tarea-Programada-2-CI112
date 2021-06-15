@@ -6,17 +6,20 @@
  * @version (08.06.2021)
  */
 
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.util.*;
+import javax.swing.*;
 public class Tarea
 {
     ArrayList <Nota> notas;
     int id;
     String titulo;
     public Tarea (int id)
-    {
-        
+    { 
         titulo = "";
+        this.id = id;
         notas = new ArrayList <Nota> ();
         notas.add(new Nota ("Información Administrativa"));
         Nota infoAdmin = notas.get(0);
@@ -34,7 +37,6 @@ public class Tarea
             infoAdmin.cantidades.add("");
         }
         infoAdmin.cantidades.add("Pendiente");
-        this.id = id;
     }
     
     public void agregueInfo ()
@@ -123,7 +125,61 @@ public class Tarea
     
     public void guardeTarea (String nombre, int id, String descripcion)
     {
-        //Guarda en un archivo .txt la info de la tarea
-        //Esto incluye tambien el nombre, id y descripción de la lista
+        //Eventualmente quiero que el metodo de guardeAgenda sea al que se le pregunta donde guardar, y que ahi se guarde todo.
+        //Por ahora lo tengo que para cada tarea se escoge donde guardarla.
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        int result = fileChooser.showSaveDialog(null);
+        if (result == JFileChooser.CANCEL_OPTION)
+            return;
+
+        File fileName = fileChooser.getSelectedFile();
+
+        if (fileName == null || fileName.getName().equals(""))
+            JOptionPane.showMessageDialog(null, "ERROR", "Nombre de archivo es inválido",
+                JOptionPane.ERROR_MESSAGE);
+        else
+        {
+            try
+            {
+                BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
+                
+                out.write(nombre + ";" + id + ";" + descripcion + ";");
+                out.flush();
+                out.newLine();
+                out.write(titulo + ";" + id + ";");
+                out.flush();
+                out.newLine();
+                
+                for (int i = 0; i<notas.size(); i++)
+                {
+                    Nota nota = notas.get(i);
+                    out.write(nota.titulo + ";");
+                    out.flush();
+                    out.newLine();
+                    String save = "";
+                    for (int j = 0; j<nota.recurso.size(); j++)
+                    {
+                        save += nota.recurso.get(j) + ";";
+                    }
+                    out.write(save);
+                    out.flush();
+                    out.newLine();
+                    save = "";
+                    for (int k = 0; k<nota.recurso.size(); k++)
+                    {
+                        save += nota.cantidades.get(k) + ";";
+                    }
+                    out.write(save);
+                    out.flush();
+                    out.newLine();
+                }
+                out.close();
+            }
+            catch (IOException e)
+            {
+                System.out.println("Excepcion al grabar archivo");
+            }
+        }
     }
 }
