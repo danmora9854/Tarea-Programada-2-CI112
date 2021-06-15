@@ -100,6 +100,7 @@ public class Lista
     public void creeProxy (int index)
     {
         //Añade una tarea juguete con el mismo id que la tarea que queremos iniciar.
+        //Debe colocar esta tarea dentro de coleccion justo detrás de la tarea que quiere iniciar (o sea metala en posicion index y mueve todo lo demás una posición)
         //Esta tarea debe ser inicializada con el estado = "Finalizada"
     }
     
