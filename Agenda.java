@@ -136,12 +136,85 @@ public class Agenda
      */
     public void leaLista()
     {
-        //Primero lee toda la data de la tarea y la mantiene por acá en memoria
+        String nombre = "";
+        String descripcion = "";
+        int id = 0;
         
-        //Revisa si la lista a la que pertenece la tarea existe en la agenda.
-        //Si es así basta con hacer que la lista añada la tarea que le decimos a su colección.
-        //Si no es así se crea una lista nueva y ahí se añade la tarea.
+        //Primero lee toda la data de la tarea y la mantiene por acá en memoria
+        JFileChooser fileChooser = new JFileChooser();  //Ventana para el manejo de directorios
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        int result = fileChooser.showOpenDialog(null);  //intenta abrir diálogo para manejo de dir
 
+        if (result == JFileChooser.CANCEL_OPTION)       //usuario da click sobre la X de la ventana
+            return;                                                                    //se obliga a terminar acá
+
+        File fileName = fileChooser.getSelectedFile();        //tome archivo seleccionado
+
+        if (fileName == null || fileName.getName().equals(""))
+            JOptionPane.showMessageDialog(null, "ERROR", "Nombre de archivo es inválido",
+                JOptionPane.ERROR_MESSAGE);
+        else
+        {
+            try
+            {
+                //El BufferedReader lee eficientemente caracteres, arrays y lineas
+                //toma los bytes del FileReader, los convierte a char y los guarda
+                BufferedReader in = new BufferedReader(new FileReader(fileName));
+                String str = in.readLine();
+                StringTokenizer st = new StringTokenizer(str, ";");
+                nombre = st.nextToken();
+                id = Integer.parseInt(st.nextToken());
+                descripcion = st.nextToken();
+                Lista lista = new Lista(id,nombre,descripcion);
+                ArrayList <Tarea> tareas = new ArrayList <Tarea> (); 
+                ArrayList <Integer> registros = new ArrayList <Integer> ();
+                
+                while ((str = in.readLine()) != null)                   //mientras hallan datos
+                {
+                    // manejo de los datos de entrada (str) y los pasa a matriz
+                    StringTokenizer st2 = new StringTokenizer(str, ";");
+                    int id_tarea = Integer.parseInt(st2.nextToken());
+                    registros.add(id_tarea);
+                    Tarea tarea = new Tarea (id_tarea);
+                    tarea.titulo = st2.nextToken();
+                    
+                    while ((str = in.readLine()) != null)
+                    {   
+                        StringTokenizer st3 = new StringTokenizer(str,";");
+                        String token1 = st3.nextToken();
+                        if (token1.equals("FIN DE TAREA"))
+                        {
+                            break;
+                        }
+                        
+                        Nota nota = new Nota (token1);
+                        str = in.readLine();
+                        StringTokenizer st4 = new StringTokenizer(str,";");
+                        while (st4.hasMoreTokens())
+                        {
+                            nota.recurso.add(st4.nextToken());
+                        }
+                        str = in.readLine();
+                        StringTokenizer st5 = new StringTokenizer(str,";");
+                        while (st5.hasMoreTokens())
+                        {
+                            nota.cantidades.add(st5.nextToken());
+                        }
+                        
+                        tarea.notas.add(nota);
+                    }
+                    tareas.add(tarea);
+                }
+                lista.coleccion = tareas;
+                lista.registro = registros;
+                coleccion.add(lista);
+                in.close();
+            }
+            catch (IOException e)
+            {
+                System.out.println("Excepcion");
+            }
+        }
     }
 
     /**
