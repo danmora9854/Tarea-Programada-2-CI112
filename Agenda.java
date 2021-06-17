@@ -277,31 +277,31 @@ public class Agenda
                         agenda.leaLista();
                         break; 
                     case "Ver contenidos de una lista por estado":
-                             String [] ops11 = new String [coleccion.size()];
-                            for (int i = 0; i<coleccion.size(); i++)
+                             String [] ops11 = new String [agenda.coleccion.size()];
+                            for (int i = 0; i<agenda.coleccion.size(); i++)
                             {
-                                ops11[i] = coleccion.get(i).nombre + " (ID: " + (i+1) + ")";
+                                ops11[i] = agenda.coleccion.get(i).nombre + " (ID: " + (i+1) + ")";
                             }
 
                             //Luego pone un menu del JOptionPane que le muestre al usuario esas opciones de arriba y escoja cual lista modificar.
                             //Digamos que el ID de la lista a modificar es id.
-                            String ans11 = (String)(JOptionPane.showInputDialog(null,"Seleccione la lista que desea ver?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
+                            String ans11 = (String)(JOptionPane.showInputDialog(null,"Seleccione la lista que desea ver?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops11, ops11[0]));
                             int index1 = -1;
-                            for (int j = 0; j<coleccion.size(); j++)
+                            for (int j = 0; j<agenda.coleccion.size(); j++)
                             {
                                 if(ops11[j].equals(ans11)) {index1 = j;}
                             }
                         String[] options={"Pendiente", "Finalizado", "Haciendo"};
-                        String ans12 = (String)(JOptionPane.showInputDialog(null,"¿Cuáles estados desea ver?","Escoja una opción",JOptionPane.QUESTION_MESSAGE, null, options, opstions[0]));
+                        String ans12 = (String)(JOptionPane.showInputDialog(null,"¿Cuáles estados desea ver?","Escoja una opción",JOptionPane.QUESTION_MESSAGE, null, options, options[0]));
                         switch(ans12){
-                            case "Pendiente",
-                                System.out.println(agenda.coleccion.get(index).filtrarEstados("Pendiente"));
+                            case "Pendiente":
+                                System.out.println(agenda.coleccion.get(index1).filtrarEstados("Pendiente"));
                                 break;
-                            case "Finalizado",
-                                System.out.println(agenda.coleccion.get(index).filtrarEstados("Finalizado"));
+                            case "Finalizado":
+                                System.out.println(agenda.coleccion.get(index1).filtrarEstados("Finalizado"));
                                 break;   
-                            case "Haciendo",
-                                System.out.println(agenda.coleccion.get(index).filtrarEstados("Haciendo"));
+                            case "Haciendo":
+                                System.out.println(agenda.coleccion.get(index1).filtrarEstados("Haciendo"));
                                 break;
                         }
                 }
