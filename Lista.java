@@ -246,6 +246,13 @@ public class Lista
             }
         }
     }
+    public ArrayList<String> filtrarEstados(String p){
+        ArrayList<String> estados=new ArrayList<String>;
+        for (Tarea c:coleccion){
+            if(c.estado=="p"){estados.add(c.titulo);}
+        }
+        return estados;
+    }
     
     public void sortTareas()
     {
