@@ -289,11 +289,11 @@ public class Agenda
                             int index1 = -1;
                             for (int j = 0; j<coleccion.size(); j++)
                             {
-                                if(ops11[j].equals(ans)) {index1 = j;}
+                                if(ops11[j].equals(ans11)) {index1 = j;}
                             }
                         String[] options={"Pendiente", "Finalizado", "Haciendo"};
-                        String ans3 = (String)(JOptionPane.showInputDialog(null,"¿Cuáles estados desea ver?","Escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops2, ops2[0]));
-                        switch(ans3){
+                        String ans12 = (String)(JOptionPane.showInputDialog(null,"¿Cuáles estados desea ver?","Escoja una opción",JOptionPane.QUESTION_MESSAGE, null, options, opstions[0]));
+                        switch(ans12){
                             case "Pendiente",
                                 System.out.println(agenda.coleccion.get(index).filtrarEstados("Pendiente"));
                                 break;
