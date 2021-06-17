@@ -107,7 +107,7 @@ public class Lista
         proxy.estado = "Finalizada";
         
         ArrayList <Tarea> lista = new ArrayList <Tarea> ();
-        for (int i = 0; i<index-1; i++)
+        for (int i = 0; i<index; i++)
         {
             lista.add(coleccion.get(i));
         }
@@ -154,7 +154,7 @@ public class Lista
                 if (permiso)
                 {
                     String [] estados = {"Finalizada","Pendiente","Haciendo"};
-                    String ans2 = (String)(JOptionPane.showInputDialog(null,"Seleccione la modificación a realizar","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
+                    String ans2 = (String)(JOptionPane.showInputDialog(null,"Seleccione la modificación a realizar","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, estados, estados[0]));
                     coleccion.get(index).estado = ans2;
                 }
                 else
