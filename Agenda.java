@@ -31,6 +31,7 @@ public class Agenda
         String nombre = JOptionPane.showInputDialog(null,"Ingrese el nombre de la lista");
         String descripcion = JOptionPane.showInputDialog(null,"Ingrese una breve descripción de la lista");
         Lista newList = new Lista (coleccion.size() + 1,nombre,descripcion);
+        JOptionPane.showMessageDialog(null,"Su lista ha sido creada exitosamente. Ahora procederá a ingresar las tareas de su lista.");
         newList.ingreseTareas();
         newList.sortTareas();
         coleccion.add(newList);
@@ -104,7 +105,7 @@ public class Agenda
         String msg = "";
         for (int i = 0; i<coleccion.size(); i++)
         {
-            msg += coleccion.get(i).nombre + " (ID: " + (i+1) + ")\n";
+            msg += coleccion.get(i).nombre + " (ID: " + coleccion.get(i).id + ")\n";
             msg += "Descripción: " + coleccion.get(i).descripcion + "\n\n";
         }
         return msg;
@@ -230,6 +231,7 @@ public class Agenda
     {
         for (int i = 0; i<coleccion.size(); i++)
         {
+            JOptionPane.showMessageDialog(null,"A continuación ingrese la dirección de guardado de la lista " + coleccion.get(i).nombre);
             coleccion.get(i).guardeLista();
         }
     }
@@ -277,20 +279,18 @@ public class Agenda
                         agenda.leaLista();
                         break; 
                     case "Ver contenidos de una lista por estado":
-                             String [] ops11 = new String [agenda.coleccion.size()];
-                            for (int i = 0; i<agenda.coleccion.size(); i++)
-                            {
-                                ops11[i] = agenda.coleccion.get(i).nombre + " (ID: " + (i+1) + ")";
-                            }
+                        String [] ops11 = new String [agenda.coleccion.size()];
+                        for (int i = 0; i<agenda.coleccion.size(); i++)
+                        {
+                            ops11[i] = agenda.coleccion.get(i).nombre + " (ID: " + (i+1) + ")";
+                        }
 
-                            //Luego pone un menu del JOptionPane que le muestre al usuario esas opciones de arriba y escoja cual lista modificar.
-                            //Digamos que el ID de la lista a modificar es id.
-                            String ans11 = (String)(JOptionPane.showInputDialog(null,"Seleccione la lista que desea ver?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops11, ops11[0]));
-                            int index1 = -1;
-                            for (int j = 0; j<agenda.coleccion.size(); j++)
-                            {
-                                if(ops11[j].equals(ans11)) {index1 = j;}
-                            }
+                        String ans11 = (String)(JOptionPane.showInputDialog(null,"Seleccione la lista que desea ver?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops11, ops11[0]));
+                        int index1 = -1;
+                        for (int j = 0; j<agenda.coleccion.size(); j++)
+                        {
+                            if(ops11[j].equals(ans11)) {index1 = j;}
+                        }
                         String[] options={"Pendiente", "Finalizado", "Haciendo"};
                         String ans12 = (String)(JOptionPane.showInputDialog(null,"¿Cuáles estados desea ver?","Escoja una opción",JOptionPane.QUESTION_MESSAGE, null, options, options[0]));
                         switch(ans12){
@@ -304,6 +304,7 @@ public class Agenda
                                 System.out.println(agenda.coleccion.get(index1).filtrarEstados("Haciendo"));
                                 break;
                         }
+                        break;
                 }
               }
         }while(flag==true);
