@@ -107,16 +107,23 @@ public class Lista
         proxy.estado = "Finalizada";
         
         ArrayList <Tarea> lista = new ArrayList <Tarea> ();
+        ArrayList <Integer> nuevoReg = new ArrayList <Integer> ();
         for (int i = 0; i<index; i++)
         {
             lista.add(coleccion.get(i));
+            nuevoReg.add(registro.get(i));
         }
         lista.add(proxy);
+        nuevoReg.add(proxy.id);
         for (int j = index; j<coleccion.size(); j++)
         {
             lista.add(coleccion.get(j));
+            nuevoReg.add(registro.get(j));
         }
+        coleccion.add(proxy);
+        registro.add(proxy.id);
         Collections.copy(coleccion,lista);
+        Collections.copy(registro,nuevoReg);
     }
     
     /**
@@ -164,10 +171,10 @@ public class Lista
                     switch (prox_ans)
                     {
                         case "Sí":
-                            creeProxy(index);
                             String [] estados = {"Finalizada","Pendiente","Haciendo"};
-                            String ans2 = (String)(JOptionPane.showInputDialog(null,"Seleccione la modificación a realizar","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
+                            String ans2 = (String)(JOptionPane.showInputDialog(null,"Seleccione la modificación a realizar","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, estados, estados[0]));
                             coleccion.get(index).estado = ans2;
+                            creeProxy(index);
                             break;
                         case "No":
                             break;
@@ -247,6 +254,7 @@ public class Lista
             }
         }
     }
+    
     public ArrayList<String> filtrarEstados(String p){
         ArrayList<String> estados=new ArrayList<String> ();
         for (Tarea c:coleccion){
