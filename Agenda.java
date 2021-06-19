@@ -15,12 +15,12 @@ public class Agenda
 {
     //Aca va a guardar las diversas listas de tareas
     public ArrayList <Lista> coleccion;
-    
+
     public Agenda ()
     {
         coleccion = new ArrayList <Lista> ();
     }
-    
+
     /**
      * Método que agrega una lista de tareas a la colección.
      */
@@ -36,7 +36,7 @@ public class Agenda
         newList.sortTareas();
         coleccion.add(newList);
     }
-    
+
     /**
      * Método que elimina una lista de tareas de la colección.
      */
@@ -47,7 +47,7 @@ public class Agenda
         {
             ops[i] = coleccion.get(i).nombre + " (ID: " + (i+1) + ")";
         }
-        
+
         //Luego pone un menu del JOptionPane que le muestre al usuario esas opciones de arriba y escoja cual lista eliminar.
         //Despues elimina la lista escogida de la coleccion y del registro
         String ans = (String)(JOptionPane.showInputDialog(null,"Seleccione la lista de tareas a eliminar?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
@@ -58,7 +58,7 @@ public class Agenda
         }
         coleccion.remove(index);
     }
-    
+
     /**
      * Método que modifica la información de alguna de las listas.
      */
@@ -69,7 +69,7 @@ public class Agenda
         {
             ops[i] = coleccion.get(i).nombre + " (ID: " + (i+1) + ")";
         }
-        
+
         //Luego pone un menu del JOptionPane que le muestre al usuario esas opciones de arriba y escoja cual lista modificar.
         //Digamos que el ID de la lista a modificar es id.
         //Invoca un metodo de la clase Lista que le permite al usuario modificar cualquier informacion de esa lista de tareas.
@@ -80,21 +80,21 @@ public class Agenda
             if(ops[j].equals(ans)) {index = j;}
         }
         //do while aqui?
-         String [] ops1 = {"Modificar nombre, descripción o ID de la lista","Modificar información de alguna tarea"};
+        String [] ops1 = {"Modificar nombre, descripción o ID de la lista","Modificar información de alguna tarea"};
         String ans1 = (String)(JOptionPane.showInputDialog(null,"Seleccione la modificación a realizar","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
-        
+
         switch(ans1)
         {
             case "Modificar nombre, descripción o ID de la lista":
-                coleccion.get(index).modifiqueAtributos();
-                break;
+            coleccion.get(index).modifiqueAtributos();
+            break;
             case "Modificar información de alguna tarea":
-                coleccion.get(index).modifiqueTarea();
-                break;
+            coleccion.get(index).modifiqueTarea();
+            break;
         }
         coleccion.get(index).sortTareas();
     }
-    
+
     /**
      * Método que imprime en terminal a todas las listas presentes en la coleccion.
      * Para cada lista de tareas imprime el nombre, ID y descripción de esta.
@@ -110,7 +110,7 @@ public class Agenda
         }
         return msg;
     }
-    
+
     /**
      * Método que devuelve en String la info de alguna nota de alguna tarea de alguna lista.
      */
@@ -121,7 +121,7 @@ public class Agenda
         {
             ops[i] = coleccion.get(i).nombre + " (ID: " + (i+1) + ")";
         }
-        
+
         //Luego pone un menu del JOptionPane que le muestre al usuario esas opciones de arriba y escoja cual lista modificar.
         //Digamos que el ID de la lista a modificar es id.
         String ans = (String)(JOptionPane.showInputDialog(null,"Seleccione la lista que desea ver?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
@@ -132,7 +132,7 @@ public class Agenda
         }
         return coleccion.get(index).muestreTarea();
     }
-    
+
     /**
      * Método que lee un archivo .txt con la data de una tarea.
      * Al usuario se le abre una ventana para seleccionar la localización del archivo.
@@ -143,7 +143,7 @@ public class Agenda
         String nombre = "";
         String descripcion = "";
         int id = 0;
-        
+
         //Primero lee toda la data de la tarea y la mantiene por acá en memoria
         JFileChooser fileChooser = new JFileChooser();  //Ventana para el manejo de directorios
         fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
@@ -172,7 +172,7 @@ public class Agenda
                 Lista lista = new Lista(id,nombre,descripcion);
                 ArrayList <Tarea> tareas = new ArrayList <Tarea> (); 
                 ArrayList <Integer> registros = new ArrayList <Integer> ();
-                
+
                 while ((str = in.readLine()) != null)                   //mientras hallan datos
                 {
                     // manejo de los datos de entrada (str) y los pasa a matriz
@@ -182,7 +182,7 @@ public class Agenda
                     Tarea tarea = new Tarea (id_tarea);
                     tarea.titulo = st2.nextToken();
                     tarea.estado = st2.nextToken();
-                    
+
                     while ((str = in.readLine()) != null)
                     {   
                         StringTokenizer st3 = new StringTokenizer(str,";");
@@ -191,7 +191,7 @@ public class Agenda
                         {
                             break;
                         }
-                        
+
                         Nota nota = new Nota (token1);
                         str = in.readLine();
                         StringTokenizer st4 = new StringTokenizer(str,";");
@@ -205,7 +205,7 @@ public class Agenda
                         {
                             nota.cantidades.add(st5.nextToken());
                         }
-                        
+
                         tarea.notas.add(nota);
                     }
                     tareas.add(tarea);
@@ -235,18 +235,51 @@ public class Agenda
             coleccion.get(i).guardeLista();
         }
     }
+
+    /**
+     *  Método que muestra las tareas por estado, dados 3 estados base:
+     *  "Pendiente","Finalizado" y "Haciendo"
+     */
+    public void muestreTareasFiltradas(){
+        String [] ops = new String [coleccion.size()];
+        for (int i = 0; i<coleccion.size(); i++)
+        {
+            ops[i] = coleccion.get(i).nombre + " (ID: " + (i+1) + ")";
+        }
+
+        String ans = (String)(JOptionPane.showInputDialog(null,"Seleccione la lista que desea ver?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops, ops[0]));
+        int index1 = -1;
+        for (int j = 0; j<coleccion.size(); j++)
+        {
+            if(ops[j].equals(ans)) {index1 = j;}
+        }
+        String[] options={"Pendiente", "Finalizado", "Haciendo"};
+        String ans1 = (String)(JOptionPane.showInputDialog(null,"¿Cuáles estados desea ver?","Escoja una opción",JOptionPane.QUESTION_MESSAGE, null, options, options[0]));
+        switch(ans1){
+            case "Pendiente":
+            System.out.println(coleccion.get(index1).filtrarEstados("Pendiente"));
+            break;
+            case "Finalizado":
+            System.out.println(coleccion.get(index1).filtrarEstados("Finalizado"));
+            break;   
+            case "Haciendo":
+            System.out.println(coleccion.get(index1).filtrarEstados("Haciendo"));
+            break;
+        }
+    }
+
     public static void main(String a[]){
         Agenda agenda=new Agenda ();
-        
+
         String[] ops1={"Crear una lista nueva","Leer alguna lista"};
         String ans1 = (String)(JOptionPane.showInputDialog(null,"¿Qué desea hacer para comenzar?","Escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops1, ops1[0]));
         switch(ans1){
             case "Crear una lista nueva":
-                agenda.agregarLista();
-                break;
+            agenda.agregarLista();
+            break;
             case "Leer alguna lista":
-                agenda.leaLista();
-                break;
+            agenda.leaLista();
+            break;
         }
         boolean flag=true;
         do{
@@ -255,58 +288,35 @@ public class Agenda
             if(ans2.equals("Guardar la agenda y salir"))
             {
                 agenda.guardeAgenda();
+                JOptionPane.showMessageDialog(null,"Sus listas se han guardado exitosamente.");
                 flag=false;
             }
             else{
                 //Aqui vienen los resultados de las opciones
                 switch(ans2){
                     case "Agregar una nueva lista de tareas":
-                        agenda.agregarLista();
-                        break;
+                    agenda.agregarLista();
+                    break;
                     case "Eliminar una lista":
-                        agenda.eliminarLista();
-                        break;
+                    agenda.eliminarLista();
+                    break;
                     case "Modificar una lista":
-                        agenda.modificarLista();
-                        break;
+                    agenda.modificarLista();
+                    break;
                     case "Mostrar todas las listas guardadas":
-                        JOptionPane.showMessageDialog(null,agenda.muestreColeccion());
-                        break; 
+                    JOptionPane.showMessageDialog(null,agenda.muestreColeccion());
+                    break; 
                     case "Ver contenidos de una lista":
-                        JOptionPane.showMessageDialog(null,agenda.muestreLista());
-                        break;
+                    JOptionPane.showMessageDialog(null,agenda.muestreLista());
+                    break;
                     case "Leer alguna lista":
-                        agenda.leaLista();
-                        break; 
+                    agenda.leaLista();
+                    break; 
                     case "Ver contenidos de una lista por estado":
-                        String [] ops11 = new String [agenda.coleccion.size()];
-                        for (int i = 0; i<agenda.coleccion.size(); i++)
-                        {
-                            ops11[i] = agenda.coleccion.get(i).nombre + " (ID: " + (i+1) + ")";
-                        }
-
-                        String ans11 = (String)(JOptionPane.showInputDialog(null,"Seleccione la lista que desea ver?","Por favor escoja una opción",JOptionPane.QUESTION_MESSAGE, null, ops11, ops11[0]));
-                        int index1 = -1;
-                        for (int j = 0; j<agenda.coleccion.size(); j++)
-                        {
-                            if(ops11[j].equals(ans11)) {index1 = j;}
-                        }
-                        String[] options={"Pendiente", "Finalizado", "Haciendo"};
-                        String ans12 = (String)(JOptionPane.showInputDialog(null,"¿Cuáles estados desea ver?","Escoja una opción",JOptionPane.QUESTION_MESSAGE, null, options, options[0]));
-                        switch(ans12){
-                            case "Pendiente":
-                                System.out.println(agenda.coleccion.get(index1).filtrarEstados("Pendiente"));
-                                break;
-                            case "Finalizado":
-                                System.out.println(agenda.coleccion.get(index1).filtrarEstados("Finalizado"));
-                                break;   
-                            case "Haciendo":
-                                System.out.println(agenda.coleccion.get(index1).filtrarEstados("Haciendo"));
-                                break;
-                        }
-                        break;
+                    agenda.muestreTareasFiltradas();
+                    break;
                 }
-              }
+            }
         }while(flag==true);
     }
 }
