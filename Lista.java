@@ -255,14 +255,20 @@ public class Lista
         }
     }
     
+    /**
+     * Método que genera un ArrayList de tareas filtradas por estado
+     */
     public ArrayList<String> filtrarEstados(String p){
         ArrayList<String> estados=new ArrayList<String> ();
         for (Tarea c:coleccion){
-            if(c.estado=="p"){estados.add(c.titulo);}
+            if(c.estado==p){estados.add(c.titulo);}
         }
         return estados;
     }
     
+    /**
+     * Método que ordena las tareas por número de ID
+     */
     public void sortTareas()
     {
         Collections.sort(registro);
