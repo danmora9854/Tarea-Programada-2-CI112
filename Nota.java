@@ -15,6 +15,10 @@ public class Nota
     ArrayList <String> recurso;
     ArrayList <String> cantidades;
     
+    /**
+     * Constructor de la clase Nota.
+     * Inicializa el titulo de la nota asi como los arraylist para guardar recursos y cantidades asociadas en la nota.
+     */
     public Nota (String titulo)
     {
         this.titulo = titulo;
@@ -22,6 +26,9 @@ public class Nota
         cantidades = new ArrayList <String> ();
     }
     
+    /**
+     * Método que ingresa nuevas entradas en una nota.
+     */
     public void guardeElementos ()
     {
         boolean hayElementos = true;
@@ -38,12 +45,19 @@ public class Nota
         }
     }
     
+    /**
+     * Método que devuelve una hilera con los contenidos de la nota.
+     * @return display = hilera con la información a imprimir
+     */
     public String muestreElementos(){
         String display="Contenidos de " + titulo + ": \n\n";
         for(int i=0;i<recurso.size();i++){display+=recurso.get(i)+" : "+cantidades.get(i)+" \n";}
         return display;
     }
     
+    /**
+     * Método que realiza la modificación de alguna entrada de la nota.
+     */
     public void cambieElementos()
     {
         String[] elemNames = new String[recurso.size()];
