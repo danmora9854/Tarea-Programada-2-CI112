@@ -21,6 +21,9 @@ public class Lista
     
     /**
      * Constructor de la clase Lista. Inicializa los atributos básicos así como la colección de tareas y el registro de ids.
+     * @param id = id de la lista, asignado automaticamente por la agenda
+     * @param nombre = nombre de la lista
+     * @param descripcion = descripcion de la lista
      */
     public Lista (int id, String nombre, String descripcion)
     {
