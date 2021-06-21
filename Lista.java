@@ -255,20 +255,14 @@ public class Lista
         }
     }
     
-    /**
-     * Método que genera un ArrayList de tareas filtradas por estado
-     */
     public ArrayList<String> filtrarEstados(String p){
         ArrayList<String> estados=new ArrayList<String> ();
         for (Tarea c:coleccion){
-            if(c.estado==p){estados.add(c.titulo);}
+            if(c.estado.equals(p)){estados.add(c.titulo);}
         }
         return estados;
     }
     
-    /**
-     * Método que ordena las tareas por número de ID
-     */
     public void sortTareas()
     {
         Collections.sort(registro);
@@ -291,26 +285,5 @@ public class Lista
             }
         }
         Collections.copy(coleccion,arrayTareas);
-        
-        /*for(int j=0;j<arrayTareas.length-1;j++){
-            for(int k=i+1;k<arrayTareas.length;k++){
-                int temp=0;
-                Tarea tempTarea=null;
-                if(arrayID[i]>arrayID[j]){
-                    temp=arrayID[i];
-                    tempTarea=arrayTareas[i];
-                    arrayID[i]=arrayID[j];
-                    arrayTareas[i]=arrayTareas[j];
-                    arrayID[j]=temp;
-                    arrayTareas[j]=tempTarea;
-                }
-            }
-            ArrayList <Tarea> tempArray = new ArrayList <Tarea> ();
-            for(int i=0;i<arrayTareas.length;i++)
-            {
-                tempArray.add(arrayTareas[i]);
-            }
-            Collections.copy(coleccion,tempArray);
-        }*/
     }
 }
