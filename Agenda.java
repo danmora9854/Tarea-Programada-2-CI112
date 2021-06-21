@@ -2,7 +2,7 @@
 /**
  * Clase que maneja todas las listas de tareas.
  *
- * @author (Juan José Bermúdez Vargas B71082 y Daniel Mora Mora)
+ * @author (Juan José Bermúdez Vargas B71082 y Daniel Mora Mora B64720)
  * @version (08.06.2021)
  */
 
