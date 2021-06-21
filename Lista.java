@@ -19,6 +19,9 @@ public class Lista
     public ArrayList <Tarea> coleccion;//Acá va guardando las distintas tareas
     public ArrayList <Integer> registro;//Acá va guardando el ID de cada tarea
     
+    /**
+     * Constructor de la clase Lista. Inicializa los atributos básicos así como la colección de tareas y el registro de ids.
+     */
     public Lista (int id, String nombre, String descripcion)
     {
         this.id = id;
@@ -97,11 +100,12 @@ public class Lista
         return true;
     }
     
+    /**
+     * Método que crea una tarea Proxy para la tarea en la posicion de indice ingresado.
+     * @param index = indice en coleccion de la tarea a iniciar mediante la creación de un proxy
+     */
     public void creeProxy (int index)
     {
-        //Añade una tarea juguete con el mismo id que la tarea que queremos iniciar.
-        //Debe colocar esta tarea dentro de coleccion justo detrás de la tarea que quiere iniciar (o sea metala en posicion index y mueve todo lo demás una posición)
-        //Esta tarea debe ser inicializada con el estado = "Finalizada"
         Tarea proxy = new Tarea (coleccion.get(index).id);
         proxy.titulo = "Proxy";
         proxy.estado = "Finalizada";
@@ -128,8 +132,7 @@ public class Lista
     
     /**
      * Método que permite modificar alguna tarea de la lista.
-     * Lo que debería hacer es desplegar un menu de donde el usuario elija exactamente qué cambiar.
-     * Puede que sea necesario hacer métodos extra dedicados a cambiar cosas específicas.
+     * Despliega un menu de donde el usuario elije exactamente qué cambiar.
      */
     public void modifiqueTarea()
     {
@@ -185,7 +188,7 @@ public class Lista
     }    
     
     /**
-     * Método que devuelve en una String cualquiera de las notas de una tarea.
+     * Método que permite adquirir en forma de hilera la información interna de cualquiera de las tareas de la lista.
      */
     public String muestreTarea()
     {
@@ -255,6 +258,11 @@ public class Lista
         }
     }
     
+    /**
+     * Método que filtra tareas de una lista con un mismo estado.
+     * @param p = hilera de estado buscado
+     * @return estados = ArrayList de hileras con los titulos de las hileras filtradas
+     */
     public ArrayList<String> filtrarEstados(String p){
         ArrayList<String> estados=new ArrayList<String> ();
         for (Tarea c:coleccion){
@@ -263,6 +271,9 @@ public class Lista
         return estados;
     }
     
+    /**
+     * Método que ordena a las tareas según su id.
+     */
     public void sortTareas()
     {
         Collections.sort(registro);
