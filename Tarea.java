@@ -17,6 +17,12 @@ public class Tarea
     int id;
     String titulo;
     String estado;
+    
+    /**
+     * Constructor de la clase tarea. Inicializa sus atributos basicos como título, id y estado.
+     * Ademas añade una nota a la tarea con informacion administrativa y permite añadir notas extra al usuario.
+     * @param id = id de la tarea
+     */
     public Tarea (int id)
     { 
         titulo = "";
@@ -41,6 +47,9 @@ public class Tarea
         estado="Pendiente";
     }
     
+    /**
+     * Método que rellena información de la tarea cuando esta recién ha sido creada.
+     */
     public void agregueInfo ()
     {
         titulo = JOptionPane.showInputDialog(null,"Ingrese título de la tarea");
@@ -82,6 +91,9 @@ public class Tarea
         }
     }
     
+    /**
+     * Método que devuelve una hilera con la información interna de la tarea.
+     */
     public String muestreNota()
     {
         String [] ops = {"Ver información básica de la tarea","Ver información interna de la tarea"};
@@ -108,7 +120,7 @@ public class Tarea
     }
     
     /**
-     * Método que modifica atributos básicos de la tarea
+     * Método que modifica atributos básicos de la tarea: titulo o ID.
      */
     public void modifiqueAtributos()
     {
@@ -127,7 +139,7 @@ public class Tarea
     }
     
     /**
-     * Método de cambio de notas
+     * Método que modifica los contenidos de cualquier nota de la tarea.
      */
     public void modifiqueNota()
     {
@@ -143,7 +155,10 @@ public class Tarea
         }
         notas.get(index).cambieElementos();
     }
-    
+
+    /**
+     * Método que durante el guardado de una lista es invocado para guardar la información de la tarea dentro del archivo.
+     */
     public void guardeTarea (BufferedWriter out)
     {
         try
