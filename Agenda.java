@@ -45,7 +45,7 @@ public class Agenda
         String [] ops = new String [coleccion.size()];
         for (int i = 0; i<coleccion.size(); i++)
         {
-            ops[i] = coleccion.get(i).nombre + " (ID: " + (i+1) + ")";
+            ops[i] = coleccion.get(i).nombre + " (ID: " + coleccion.get(i).id + ")";
         }
         
         //Luego pone un menu del JOptionPane que le muestre al usuario esas opciones de arriba y escoja cual lista eliminar.
@@ -231,7 +231,7 @@ public class Agenda
     {
         for (int i = 0; i<coleccion.size(); i++)
         {
-            JOptionPane.showMessageDialog(null,"A continuación ingrese la dirección de guardado de la lista " + coleccion.get(i).nombre);
+            JOptionPane.showMessageDialog(null,"A continuación ingrese la dirección de guardado de la lista " + coleccion.get(i).nombre + ". Debe incluir el nombre del archivo con extension .txt");
             coleccion.get(i).guardeLista();
         }
     }
@@ -291,14 +291,14 @@ public class Agenda
                         {
                             if(ops11[j].equals(ans11)) {index1 = j;}
                         }
-                        String[] options={"Pendiente", "Finalizado", "Haciendo"};
+                        String[] options={"Pendiente", "Finalizada", "Haciendo"};
                         String ans12 = (String)(JOptionPane.showInputDialog(null,"¿Cuál estado desea ver? La lista se imprimirá en terminal.","Escoja una opción",JOptionPane.QUESTION_MESSAGE, null, options, options[0]));
                         switch(ans12){
                             case "Pendiente":
                                 System.out.println(agenda.coleccion.get(index1).filtrarEstados("Pendiente"));
                                 break;
-                            case "Finalizado":
-                                System.out.println(agenda.coleccion.get(index1).filtrarEstados("Finalizado"));
+                            case "Finalizada":
+                                System.out.println(agenda.coleccion.get(index1).filtrarEstados("Finalizada"));
                                 break;   
                             case "Haciendo":
                                 System.out.println(agenda.coleccion.get(index1).filtrarEstados("Haciendo"));
