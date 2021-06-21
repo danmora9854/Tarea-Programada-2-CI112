@@ -16,6 +16,10 @@ public class Agenda
     //Aca va a guardar las diversas listas de tareas
     public ArrayList <Lista> coleccion;
     
+    
+    /**
+     * Constructor de la clase agenda. Inicializa la coleccion de listas de tareas.
+     */
     public Agenda ()
     {
         coleccion = new ArrayList <Lista> ();
@@ -96,9 +100,10 @@ public class Agenda
     }
     
     /**
-     * Método que imprime en terminal a todas las listas presentes en la coleccion.
-     * Para cada lista de tareas imprime el nombre, ID y descripción de esta.
+     * Método que devuelve hilera con informacion de todas las listas presentes en la coleccion.
+     * Para cada lista de tareas incluye el nombre, ID y descripción de esta.
      * Todo lo anterior va en un bloque. Luego se deja un espacio en blanco y se sigue con otro bloque de otra lista de tareas.
+     * @ return msg = hilera con informacion a imprimir
      */
     public String muestreColeccion ()
     {
@@ -112,7 +117,7 @@ public class Agenda
     }
     
     /**
-     * Método que devuelve en String la info de alguna nota de alguna tarea de alguna lista.
+     * Método que devuelve una hilera con la info interna de alguna tarea de alguna lista.
      */
     public String muestreLista ()
     {
@@ -136,7 +141,6 @@ public class Agenda
     /**
      * Método que lee un archivo .txt con la data de una tarea.
      * Al usuario se le abre una ventana para seleccionar la localización del archivo.
-     * Si la lista a la que pertenece esta tarea no existe, se crea y añade a la agenda.
      */
     public void leaLista()
     {
@@ -225,7 +229,7 @@ public class Agenda
     /**
      * Método que guarda todas las listas de la agenda en archivos .txt.
      * Todos los archivos son guardados por default en la carpeta del proyecto.
-     * Hay un archivo por tarea.
+     * Hay un archivo por lista.
      */
     public void guardeAgenda()
     {
